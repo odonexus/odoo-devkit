@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odoo DevKit — Odoo-aware code intelligence for your IDE</title>
     <meta name="description"
-        content="Odoo DevKit gives your IDE Odoo-aware completion, navigation, and type checking for Odoo — in Python, XML views, QWeb/Owl templates, JavaScript, and SQL. Supports Odoo 10+.">
+        content="Completion, navigation and type checking that read your real Odoo source: Python, XML views, QWeb and Owl templates, JavaScript, SQL. Scoped to each addon's Odoo version and depends list. Odoo 10+.">
     <meta property="og:title" content="Odoo DevKit — Odoo-aware code intelligence for your IDE">
     <meta property="og:description"
-        content="Completion, navigation, and type checking for Odoo development, scoped to your project's version and dependencies.">
+        content="Completion, navigation and type checking scoped to each addon's Odoo version and depends list.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://odonexus.github.io/odoo-devkit/">
     <link rel="canonical" href="https://odonexus.github.io/odoo-devkit/">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 
     <style>
         :root {
@@ -30,7 +30,7 @@
             --text-muted: #a79f8e;
             --text-dim: #918777;
             --radius: 10px;
-            --max: 1180px;
+            --max: 1380px;
             --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
             --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
@@ -686,6 +686,10 @@
             h1 .accent {
                 animation: none;
             }
+
+            .lightbox {
+                transition: none;
+            }
         }
 
         a:focus-visible,
@@ -711,16 +715,6 @@
             text-align: left;
         }
 
-        .kicker {
-            font-family: var(--mono);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            color: var(--purple);
-            margin-bottom: 14px;
-        }
-
         h2 {
             font-family: var(--mono);
             font-size: 29px;
@@ -736,105 +730,7 @@
             margin: 0;
         }
 
-        /* ---------- problem cards ---------- */
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 44px;
-        }
-
-        .problem-card {
-            background: rgba(21, 19, 16, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 26px 24px;
-            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-        }
-
-        .problem-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--border-strong);
-            box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(245, 185, 59, 0.25),
-                0 0 40px -10px rgba(245, 185, 59, 0.18);
-        }
-
-        .problem-card .gap-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-family: var(--mono);
-            font-size: 13px;
-            font-weight: 700;
-            color: #e8a33c;
-            background: rgba(232, 163, 60, 0.1);
-            border: 1px solid rgba(232, 163, 60, 0.32);
-            padding: 6px 14px 6px 10px;
-            border-radius: 100px;
-            margin-bottom: 18px;
-            letter-spacing: .02em;
-        }
-
-        .problem-card .gap-tag::before {
-            content: "▲";
-            font-size: 9px;
-        }
-
-        .problem-card h3 {
-            font-size: 16.5px;
-            margin: 0 0 10px;
-            font-family: var(--mono);
-            color: var(--gold-soft);
-        }
-
-        .problem-card p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 14.5px;
-        }
-
-        .resolve-line {
-            text-align: center;
-            font-size: 17px;
-            color: var(--text);
-            max-width: 680px;
-            margin: 0 auto;
-            padding-top: 8px;
-        }
-
-        .resolve-line b {
-            color: var(--gold-soft);
-        }
-
-        /* ---------- feature grid ---------- */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .feature-card {
-            background: rgba(21, 19, 16, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 26px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--border-strong);
-            box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(245, 185, 59, 0.25),
-                0 0 40px -10px rgba(245, 185, 59, 0.18);
-        }
-
+        /* ---------- feature blocks ---------- */
         .file-tab {
             display: flex;
             align-items: center;
@@ -842,8 +738,7 @@
             font-family: var(--mono);
             font-size: 12.5px;
             color: var(--text-dim);
-            padding-bottom: 14px;
-            border-bottom: 1px dashed var(--border);
+            margin-bottom: 16px;
         }
 
         .file-tab .dot {
@@ -853,14 +748,7 @@
             flex: none;
         }
 
-        .feature-card h3 {
-            font-family: var(--mono);
-            font-size: 17px;
-            margin: 0;
-            letter-spacing: -0.01em;
-        }
-
-        .feature-card .tag {
+        .tag {
             display: inline-block;
             margin-left: 10px;
             font-size: 10.5px;
@@ -875,46 +763,365 @@
             vertical-align: 2px;
         }
 
-        .feature-card ul {
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .feature-block {
+            background: rgba(21, 19, 16, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .feature-block:hover {
+            border-color: var(--border-strong);
+            box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(245, 185, 59, 0.25),
+                0 0 40px -10px rgba(245, 185, 59, 0.18);
+        }
+
+        .feature-copy {
+            margin-bottom: 20px;
+        }
+
+        .feature-copy h3 {
+            font-family: var(--mono);
+            font-size: 20px;
+            margin: 0 0 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-copy p {
             margin: 0;
-            padding: 0;
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .feature-card li {
-            font-size: 14.5px;
             color: var(--text-muted);
-            padding-left: 20px;
-            position: relative;
+            font-size: 15.5px;
         }
 
-        .feature-card li strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .feature-card li::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 7px;
-            height: 7px;
-            border-radius: 2px;
-            background: var(--gold);
-            opacity: .85;
-            transform: rotate(45deg);
-        }
-
-        .feature-card li code {
+        .feature-copy p code {
             color: var(--gold-soft);
-            font-size: 13px;
+            font-size: 13.5px;
             background: rgba(245, 185, 59, 0.08);
             padding: 1px 6px;
             border-radius: 5px;
+        }
+
+        .feature-shot {
+            border: 1px dashed var(--border-strong);
+            border-radius: var(--radius);
+            background: rgba(21, 19, 16, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .feature-shot span {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .feature-shot img {
+            display: block;
+            width: 100%;
+            border-radius: calc(var(--radius) - 1px);
+        }
+
+        .feature-shot:has(img) {
+            border-style: solid;
+            border-color: var(--border);
+            padding: 0;
+            background: var(--bg-elev);
+        }
+
+        .feature-shot:has(.shot-slider) {
+            display: block;
+            padding: 0;
+        }
+
+        /* ---------- feature screenshot slideshow + lightbox ---------- */
+        .shot-slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: calc(var(--radius) - 1px);
+            cursor: grab;
+            touch-action: pan-y;
+            user-select: none;
+        }
+
+        .shot-slider.is-dragging {
+            cursor: grabbing;
+        }
+
+        .shot-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .shot-track img {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            -webkit-user-drag: none;
+        }
+
+        .shot-slider .zoom-hint {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 100px;
+            background: rgba(10, 9, 8, 0.7);
+            border: 1px solid var(--border-strong);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .01em;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity .2s ease, transform .2s ease;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .shot-slider:hover .zoom-hint,
+        .shot-slider:focus-visible .zoom-hint {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .shot-dots {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            touch-action: none;
+            cursor: grab;
+        }
+
+        .shot-dots.is-dragging {
+            cursor: grabbing;
+        }
+
+        .shot-dots button {
+            position: relative;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .shot-dots button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(243, 239, 231, 0.4);
+            transform: translate(-50%, -50%);
+            transition: background .2s ease;
+        }
+
+        .shot-dots button:hover::before {
+            background: rgba(243, 239, 231, 0.65);
+        }
+
+        .shot-dots .dot-indicator {
+            position: absolute;
+            top: 50%;
+            width: 9px;
+            height: 9px;
+            /* an oversized radius always clamps to a full pill/capsule shape, no matter
+               how wide the JS-driven stretch animation below makes this element */
+            border-radius: 999px;
+            background: var(--gold);
+            box-shadow: 0 0 8px rgba(245, 185, 59, 0.55);
+            transform: translate(0, -50%);
+            /* left/width transitions are driven entirely by JS (two-phase stretch-then-snap
+               "liquid dot" animation) — see positionDotIndicator */
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 48px;
+            background: rgba(5, 4, 3, 0.88);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s ease;
+        }
+
+        .lightbox.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-viewport {
+            position: relative;
+            max-width: 90vw;
+            max-height: 78vh;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border-strong);
+            cursor: grab;
+            touch-action: pan-y;
+            user-select: none;
+        }
+
+        .lightbox-viewport.is-dragging {
+            cursor: grabbing;
+        }
+
+        .lightbox-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .lightbox-track img {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            background: var(--bg-elev);
+            -webkit-user-drag: none;
+        }
+
+        .lightbox-dots {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            touch-action: none;
+            cursor: grab;
+        }
+
+        .lightbox-dots.is-dragging {
+            cursor: grabbing;
+        }
+
+        .lightbox-dots button {
+            position: relative;
+            width: 26px;
+            height: 24px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .lightbox-dots button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(243, 239, 231, 0.4);
+            transform: translate(-50%, -50%);
+            transition: background .2s ease;
+        }
+
+        .lightbox-dots button:hover::before {
+            background: rgba(243, 239, 231, 0.65);
+        }
+
+        .lightbox-dots .dot-indicator {
+            position: absolute;
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--gold);
+            box-shadow: 0 0 8px rgba(245, 185, 59, 0.55);
+            transform: translate(0, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .lightbox-close,
+        .lightbox-nav {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--border-strong);
+            background: rgba(21, 19, 16, 0.75);
+            color: var(--text);
+            cursor: pointer;
+            transition: background .15s ease, border-color .15s ease;
+        }
+
+        .lightbox-close:hover,
+        .lightbox-nav:hover {
+            background: rgba(245, 185, 59, 0.16);
+            border-color: var(--gold);
+        }
+
+        .lightbox-close {
+            top: 22px;
+            right: 26px;
+            width: 42px;
+            height: 42px;
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .lightbox-nav {
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            font-size: 17px;
+            z-index: 5;
+        }
+
+        .lightbox-nav.prev {
+            left: 18px;
+        }
+
+        .lightbox-nav.next {
+            right: 18px;
+        }
+
+        .lightbox-nav[hidden],
+        .lightbox-dots[hidden] {
+            display: none;
         }
 
         /* ---------- credibility ---------- */
@@ -1184,12 +1391,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .problem-grid {
-                grid-template-columns: 1fr;
-            }
-
             .feature-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
 
             .cred-grid {
@@ -1212,10 +1415,6 @@
 
             h2 {
                 font-size: 26px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
             }
 
             .section {
@@ -1307,11 +1506,10 @@
     <header>
         <div class="wrap nav">
             <a class="brand" href="#top">
-                <img class="logo" src="logo.svg" alt="Odoo DevKit" height="22">
+                <img class="logo" src="assets/img/logo.svg" alt="Odoo DevKit" height="22">
             </a>
 
             <nav class="links" id="nav-links">
-                <a href="#why">Why it matters</a>
                 <a href="#features">Features</a>
                 <a href="#requirements">Requirements</a>
                 <a href="#pricing">Pricing</a>
@@ -1338,16 +1536,15 @@
                     <div class="eyebrow"><span class="dot"></span> IDE Plugin for Odoo</div>
                     <h1>Your IDE finally<br>understands <span class="accent">Odoo</span>.</h1>
                     <p class="lede">
-                        Odoo DevKit gives your IDE Odoo-aware completion, navigation, and type checking
-                        for Odoo, across Python, XML views, QWeb/Owl templates, JavaScript, and SQL. Suggestions
-                        are scoped to your addon's Odoo version and <code>depends</code> list.
+                        Completion, navigation and type checking that read your real Odoo source, across
+                        Python, XML views, QWeb and Owl templates, JavaScript and SQL. Every suggestion is
+                        scoped to the addon you're in: its Odoo version, its <code>depends</code> list.
                     </p>
                     <div class="hero-ctas">
                         <a class="btn btn-primary btn-lg" href="#pricing">Get Odoo DevKit &nbsp;&rarr;</a>
                         <a class="btn btn-ghost btn-lg" href="#features">See what it does</a>
                     </div>
-                    <p class="hero-note">Available now for PyCharm &middot; Supports Odoo 10+ &middot; 30-day
-                        free trial</p>
+                    <p class="hero-note">PyCharm &middot; Odoo 10+ &middot; 30-day free trial</p>
                 </div>
 
                 <div class="editor" aria-hidden="true">
@@ -1438,141 +1635,179 @@
             </div>
         </section>
 
-        <!-- ============ WHY / PROBLEM ============ -->
-        <section class="section" id="why">
-            <div class="wrap">
-                <div class="section-head">
-                    <div class="kicker">The problem</div>
-                    <h2>To your IDE, Odoo doesn't look like normal Python</h2>
-                    <p>Odoo's ORM works in ways a normal Python type-checker can't see.</p>
-                </div>
-
-                <div class="problem-grid">
-                    <div class="problem-card">
-                        <div class="gap-tag">invisible to your IDE</div>
-                        <h3>_inherit merges everywhere</h3>
-                        <p>One model can be built from many <code class="mono">_inherit</code> extensions
-                            spread across different addons. A normal Python plugin only sees one class at a
-                            time.</p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="gap-tag">no static type</div>
-                        <h3>env['model'] is just a string</h3>
-                        <p><code class="mono">self.env['res.partner']</code> has no real type. Every
-                            <code class="mono">.search()</code>, <code class="mono">.browse()</code>, or
-                            <code class="mono">.filtered()</code> call after it is untyped too.
-                        </p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="gap-tag">opaque text</div>
-                        <h3>XML, QWeb and SQL are just text</h3>
-                        <p>Field names in <code class="mono">&lt;field name=&gt;</code>, domain tuples, and
-                            <code class="mono">cr.execute(...)</code> strings are just plain text. No checking,
-                            no jumping to the real code.
-                        </p>
-                    </div>
-                </div>
-
-                <p class="resolve-line">Odoo DevKit works by <b>reading your Odoo source directly</b>,
-                    instead of guessing from a list of snippets.</p>
-            </div>
-        </section>
-
         <!-- ============ FEATURES ============ -->
         <section class="section" id="features">
             <div class="wrap">
                 <div class="section-head">
-                    <div class="kicker">Features</div>
                     <h2>Everywhere Odoo touches your code</h2>
-                    <p>One engine handles completion, navigation, and checks across every file type in
-                        your Odoo addon.</p>
+                    <p>None of this is a snippet library. Each feature reads the addon you have open and
+                        its real <code class="mono">_inherit</code> chain.</p>
                 </div>
 
                 <div class="feature-grid">
 
-                    <div class="feature-card">
-                        <div class="file-tab"><span class="dot" style="background:var(--gold-soft)"></span>models.py
-                        </div>
-                        <h3>Models, fields, and types</h3>
-                        <ul>
-                            <li><strong>Model &amp; field completion:</strong> Go to Declaration for
-                                <code>_name</code>, <code>_inherit</code>, <code>env[...]</code>, and
-                                relational fields
-                            </li>
-                            <li><strong>Recordset typing:</strong> precise inference for <code>self</code>,
-                                ORM calls like <code>sudo()</code>, and <code>Form</code>
-                            </li>
-                            <li><strong>Dependency guard:</strong> a warning the moment a model falls outside
-                                your addon's <code>depends</code> list
-                            </li>
-                        </ul>
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:var(--gold-soft)"></span>models.py</div>
+                        <h3>Imports that resolve to real files</h3>
+                        <p><code>odoo.addons</code> is a namespace Odoo builds at runtime, not a real
+                            package, so plain Python support can't follow an import into another addon.
+                            Odoo DevKit locates the addon on disk and resolves the import, whether it
+                            sits in your project, a dependency, or a sibling workspace module.</p>
                     </div>
-
-                    <div class="feature-card">
-                        <div class="file-tab"><span class="dot" style="background:var(--purple)"></span>templates.xml
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/import_module.gif" alt="Odoo DevKit resolving and completing an import from another addon" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
                         </div>
-                        <h3>QWeb and Owl templates</h3>
-                        <ul>
-                            <li><strong>Context-aware directives:</strong> <code>t-*</code> completion, plus
-                                typed Python inside <code>eval=</code>/<code>domain=</code>/<code>context=</code>
-                            </li>
-                            <li><strong>Live XPath resolution:</strong> jump from <code>&lt;xpath expr=&gt;</code>
-                                straight to the matched node
-                            </li>
-                            <li><strong>CSS completion:</strong> <code>class=</code>/<code>id=</code> inside
-                                templates <span class="tag">Pro</span>
-                            </li>
-                        </ul>
                     </div>
+                </div>
 
-                    <div class="feature-card">
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:var(--gold-soft)"></span>models.py</div>
+                        <h3>A dozen <code>_inherit</code> classes. One model.</h3>
+                        <p>Odoo builds one model out of <code>_inherit</code> classes scattered over a
+                            dozen addons, and <code>_inherits</code> delegation follows different rules
+                            again. DevKit rebuilds that merge, so <code>self.env[...]</code> carries a
+                            real, chainable type through ORM calls, and a field from outside your
+                            <code>depends</code> is flagged before you run anything.</p>
+                    </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider" data-interval="4000">
+                            <div class="shot-track">
+                                <img src="assets/img/orm/1.gif" alt="Odoo DevKit following an ORM chain call to a typed recordset" loading="lazy" draggable="false">
+                                <img src="assets/img/orm/2.gif" alt="Odoo DevKit flagging a field outside the addon's depends chain" loading="lazy" draggable="false">
+                                <img src="assets/img/orm/3.gif" alt="Odoo DevKit merging a model's _inherit classes into one completion popup" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:var(--purple)"></span>views.xml</div>
+                        <h3>Views your IDE can read</h3>
+                        <p>To most tools a <code>&lt;field name=&gt;</code> attribute or a domain tuple is
+                            plain text, so a typo surfaces only when the view fails to load. DevKit
+                            resolves the model behind it, following <code>inherit_id</code> and
+                            <code>&lt;xpath&gt;</code>, and a gutter icon jumps to the matched node in the
+                            parent view.</p>
+                    </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/xml/record.gif" alt="Odoo DevKit completing a field name attribute inside a view's XML" loading="lazy" draggable="false">
+                                <img src="assets/img/xml/record_inherit.gif" alt="A gutter icon on an xpath locator jumping to the matching node in the parent view" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:#e0955a"></span>xml / csv</div>
+                        <h3>One external ID system, many data files</h3>
+                        <p><code>&lt;record&gt;</code>, <code>&lt;template&gt;</code> and a CSV row all
+                            declare the same kind of external id. DevKit indexes the three identically,
+                            so Go to Symbol, Ctrl+click and Find Usages land on the declaration wherever
+                            it lives.</p>
+                    </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/external_id/record.gif" alt="Ctrl+clicking an external id declared in a &lt;record&gt;" loading="lazy" draggable="false">
+                                <img src="assets/img/external_id/template.gif" alt="Ctrl+clicking an external id declared in a &lt;template&gt;" loading="lazy" draggable="false">
+                                <img src="assets/img/external_id/csv.gif" alt="Ctrl+clicking an external id declared in a CSV data file" loading="lazy" draggable="false">
+                                <img src="assets/img/external_id/symbol.gif" alt="Finding an external id by name through Go to Symbol" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:var(--purple)"></span>templates.xml</div>
+                        <h3>Templates that know what's in scope</h3>
+                        <p>DevKit models the QWeb engine itself: every <code>t-*</code> directive, plus the
+                            exact variables Odoo puts in scope for each one, from <code>env</code> and the
+                            record's fields down to an earlier <code>t-set</code>. Completion offers only
+                            what exists at render time, and Ctrl+click goes to where a variable was
+                            declared.</p>
+                    </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/xml/template.gif" alt="Odoo DevKit completing a QWeb directive and context-variable expression" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-block">
+                    <div class="feature-copy">
                         <div class="file-tab"><span class="dot" style="background:#7fb4e8"></span>component.js</div>
-                        <h3>JavaScript and Owl components</h3>
-                        <ul>
-                            <li><strong>Bi-directional navigation:</strong> jump between JS components and
-                                XML templates
-                            </li>
-                            <li><strong>Modern &amp; legacy modules:</strong> <code>@addon/path</code> and
-                                <code>odoo.define</code> resolve to the same file
-                            </li>
-                            <li><strong>Typed state &amp; props:</strong> completion for
-                                <code>registry.category()</code>, <code>useService()</code>, state, and props
-                            </li>
-                        </ul>
+                        <h3>The framework on top of JavaScript</h3>
+                        <p>Odoo layers its own module system, Owl components, registries, services and
+                            hooks over plain JavaScript. DevKit follows all of it, so completion and
+                            navigation know what a registry key or a service name points at.</p>
                     </div>
-
-                    <div class="feature-card">
-                        <div class="file-tab"><span class="dot" style="background:#9fd48a"></span>queries.sql</div>
-                        <h3>SQL support <span class="tag">PyCharm Pro</span></h3>
-                        <ul>
-                            <li><strong>Injected SQL:</strong> PostgreSQL highlighting inside
-                                <code>cr.execute(...)</code> and constraints
-                            </li>
-                            <li><strong>Model-aware completion:</strong> table and column suggestions synced
-                                to Odoo models
-                            </li>
-                            <li><strong>Go to Declaration:</strong> jump from a SQL string straight to the
-                                Python field
-                            </li>
-                        </ul>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/js/component.gif" alt="Odoo DevKit completing and highlighting Owl component syntax" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="feature-card">
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:#9fd48a"></span>queries.sql<span class="tag">Pro</span></div>
+                        <h3>Raw SQL, still Odoo-aware</h3>
+                        <p><code>cr.execute(...)</code> steps outside the ORM, so a generic SQL plugin has
+                            no idea <code>sale_order_line</code> is one of your models. DevKit maps the
+                            table back, completes real columns, and Ctrl+click on a column opens the
+                            Python field behind it.</p>
+                    </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/sql/raw_sql.gif" alt="Odoo DevKit completing a column name inside cr.execute" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-block">
+                    <div class="feature-copy">
                         <div class="file-tab"><span class="dot" style="background:#e5595a"></span>problems.log</div>
-                        <h3>Inspections and refactoring</h3>
-                        <ul>
-                            <li><strong>Version-aware warnings:</strong> deprecated syntax
-                                (<code>&lt;tree&gt;</code>&rarr;<code>&lt;list&gt;</code>, <code>attrs=</code>)
-                                matched to your Odoo version
-                            </li>
-                            <li><strong>Dependency checks:</strong> unresolved models, fields, and Selection
-                                values flagged
-                            </li>
-                            <li><strong>Odoo-smart refactoring:</strong> Find Usages and Rename across models,
-                                not just class names
-                            </li>
-                        </ul>
+                        <h3>Warnings tied to your Odoo version</h3>
+                        <p><code>&lt;tree&gt;</code> became <code>&lt;list&gt;</code> in Odoo 18;
+                            <code>attrs=</code> was removed one release earlier. DevKit checks each addon
+                            against the version it detects, not a generic rule set. It flags real risk
+                            too, like <code>sudo()</code> inside a public route handing data to anonymous
+                            visitors.</p>
                     </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/warning/view_type_deprecated.png" alt="Odoo DevKit flagging &lt;tree&gt; as deprecated on an Odoo 18 project" loading="lazy" draggable="false">
+                                <img src="assets/img/warning/attr_deprecated.png" alt="Odoo DevKit flagging attrs= as removed on an Odoo 17+ project" loading="lazy" draggable="false">
+                                <img src="assets/img/warning/sudo.png" alt="Odoo DevKit warning that sudo() bypasses access rights inside a public route" loading="lazy" draggable="false">
+                            </div>
+                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                        </div>
+                    </div>
+                </div>
 
                 </div>
             </div>
@@ -1582,10 +1817,9 @@
         <section class="section">
             <div class="wrap">
                 <div class="section-head">
-                    <div class="kicker">Under the hood</div>
                     <h2>Built for large, multi-addon Odoo codebases</h2>
-                    <p>The hard parts of Odoo's ORM are exactly what break simple tools, or make them slow.
-                        Odoo DevKit is built around them.</p>
+                    <p>The parts of Odoo's ORM that break simpler tools, or make them slow, are the parts
+                        Odoo DevKit is designed around.</p>
                 </div>
 
                 <div class="cred-grid">
@@ -1593,8 +1827,9 @@
                         <div class="cred-mark">▸</div>
                         <div>
                             <h3>Multiple Odoo versions, kept separate</h3>
-                            <p>Works with several Odoo versions in one project without mixing them up.
-                                Lookups are scoped to each addon's Odoo version and dependencies.</p>
+                            <p>Several Odoo versions can sit in one project. Every lookup is scoped to the
+                                addon's own version and dependencies, so a v16 model never turns up in v18
+                                completion.</p>
                         </div>
                     </div>
                     <div class="cred-item">
@@ -1603,25 +1838,25 @@
                             <h3><code class="mono">_inherit</code> vs <code class="mono">_inherits</code>, handled
                                 correctly
                             </h3>
-                            <p>SQL columns and ORM fields follow different rules for <code class="mono">_inherit</code>
-                                and <code class="mono">_inherits</code>. Odoo DevKit models both correctly
-                                instead of treating them as one mechanism.</p>
+                            <p>SQL columns and ORM fields follow different rules for
+                                <code class="mono">_inherit</code> and <code class="mono">_inherits</code>.
+                                DevKit models both, instead of collapsing them into one mechanism.</p>
                         </div>
                     </div>
                     <div class="cred-item">
                         <div class="cred-mark">▸</div>
                         <div>
                             <h3>Stays fast on heavily-extended models</h3>
-                            <p>Uses a search index instead of re-reading every file on each keystroke, even on
-                                a model extended across many addons.</p>
+                            <p>Lookups go through a search index rather than re-reading every file on each
+                                keystroke, even for a model extended across dozens of addons.</p>
                         </div>
                     </div>
                     <div class="cred-item">
                         <div class="cred-mark">▸</div>
                         <div>
                             <h3>Tested against Odoo source</h3>
-                            <p>Automated tests check behavior against Odoo's own source code across
-                                supported versions.</p>
+                            <p>Automated tests check behavior against Odoo's own source, version by
+                                version.</p>
                         </div>
                     </div>
                 </div>
@@ -1632,10 +1867,9 @@
         <section class="section" id="requirements">
             <div class="wrap">
                 <div class="section-head">
-                    <div class="kicker">Requirements</div>
-                    <h2>What you need today</h2>
-                    <p>PyCharm 2026.2 or newer (build <code class="mono">262</code>+). Supports Odoo 10+ in
-                        both editions.</p>
+                    <h2>What you need</h2>
+                    <p>PyCharm 2026.2 or newer (build <code class="mono">262</code>+), either edition.
+                        Odoo 10 and up.</p>
                 </div>
 
                 <div class="req-table-wrap">
@@ -1666,9 +1900,9 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="req-note">Works with your existing Python interpreter and project setup.
-                    * PyCharm Community's own JavaScript support is more limited than Professional's;
-                    Odoo DevKit's JavaScript and Owl features follow that same limit.</p>
+                <p class="req-note">Works with your existing interpreter and project layout.
+                    * Community's own JavaScript support is thinner than Professional's, and DevKit's
+                    JavaScript and Owl features inherit that limit.</p>
             </div>
         </section>
 
@@ -1676,20 +1910,18 @@
         <section class="section" id="pricing">
             <div class="wrap">
                 <div class="section-head">
-                    <div class="kicker">Pricing</div>
                     <h2>One license, the full plugin</h2>
-                    <p>No tiers to compare. One license includes every plugin feature; SQL and CSS
-                        support also requires PyCharm Professional.</p>
+                    <p>No tiers to compare. SQL and CSS support also needs PyCharm Professional.</p>
                 </div>
 
                 <div class="pricing-card">
                     <div class="plan-name">Odoo DevKit</div>
                     <h3>Full License</h3>
-                    <p class="price-note">Priced and billed through JetBrains Marketplace. See the listing for
-                        current pricing and team plans.</p>
+                    <p class="price-note">Priced and billed on JetBrains Marketplace, team plans
+                        included. See the listing for current pricing.</p>
                     <ul>
-                        <li>Every feature on this page, no tiers</li>
-                        <li>Updates included for the license term</li>
+                        <li>Every feature on this page</li>
+                        <li>Updates for the license term</li>
                         <li>30-day free trial</li>
                     </ul>
                     <div class="pricing-actions">
@@ -1706,39 +1938,34 @@
         <section class="section" id="faq">
             <div class="wrap">
                 <div class="section-head">
-                    <div class="kicker">FAQ</div>
                     <h2>Good to know</h2>
                 </div>
 
                 <div class="faq">
                     <div class="faq-item">
                         <h3>Which IDE do I need?</h3>
-                        <p>Today, PyCharm Community or Professional, 2026.2 (build <code>262</code>) or newer.
-                            SQL and CSS features need PyCharm Professional specifically, with the
-                            matching bundled plugin enabled. JavaScript and Owl support works in both
-                            editions, limited by PyCharm Community's own, more restricted JavaScript
-                            support.</p>
+                        <p>PyCharm Community or Professional, 2026.2 (build <code>262</code>) or newer.
+                            SQL and CSS need Professional, with its bundled plugin enabled. JavaScript
+                            and Owl work in both editions, within Community's own more limited
+                            JavaScript support.</p>
                     </div>
                     <div class="faq-item">
                         <h3>Will Odoo DevKit support other IDEs?</h3>
-                        <p>PyCharm is the only IDE we support today. The core engine isn't tied to one editor,
-                            so other IDEs may come later. Let us know which one you want.</p>
+                        <p>PyCharm is the only one today. The engine isn't tied to a single editor, so
+                            others may follow. Tell us which one you need.</p>
                     </div>
                     <div class="faq-item">
                         <h3>Which Odoo versions are supported?</h3>
-                        <p>Odoo DevKit supports Odoo 10+ and detects the active version from your project
-                            source and manifests. Different Odoo versions can sit in the same workspace
-                            without clashing.</p>
+                        <p>Odoo 10 and up. The active version is detected from your source and manifests,
+                            and several versions can share one workspace without clashing.</p>
                     </div>
                     <div class="faq-item">
                         <h3>Does my code ever leave my machine?</h3>
-                        <p>Code analysis and indexing run locally inside your IDE. Odoo DevKit does not
-                            upload your source code.</p>
+                        <p>No. Analysis and indexing run locally in your IDE, and nothing is uploaded.</p>
                     </div>
                     <div class="faq-item">
                         <h3>Is there a free trial?</h3>
-                        <p>Yes. JetBrains Marketplace offers a 30-day trial before you need to activate a
-                            license.</p>
+                        <p>Yes, 30 days through JetBrains Marketplace before you activate a license.</p>
                     </div>
                     <div class="faq-item">
                         <h3>How do I get support or report a bug?</h3>
@@ -1756,7 +1983,7 @@
     <footer>
         <div class="wrap foot-grid">
             <div class="foot-brand">
-                <img class="logo" src="logo.svg" alt="Odoo DevKit" height="18">
+                <img class="logo" src="assets/img/logo.svg" alt="Odoo DevKit" height="18">
                 <span>&copy; 2026 OdoNexus</span>
             </div>
             <div class="foot-links">
@@ -1801,6 +2028,462 @@
             }, { threshold: 0.1 });
 
             observer.observe(editor);
+        })();
+
+        (function () {
+            var sliders = document.querySelectorAll('.shot-slider');
+            if (!sliders.length) return;
+
+            var reduceMotion = window.matchMedia &&
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var DRAG_THRESHOLD = 0.18; // fraction of viewport width to trigger a slide change
+            var AXIS_LOCK_PX = 6;      // movement needed before committing to horizontal vs vertical
+
+            // Drag/swipe-enabled carousel: works identically for mouse drag and touch
+            // swipe via the unified Pointer Events API. `viewport` is the element that
+            // receives pointer events; `track` is the flex row that gets translated.
+            function makeCarousel(viewport, track, count, opts) {
+                opts = opts || {};
+                var current = Math.min(Math.max(opts.startIndex || 0, 0), count - 1);
+                var dragging = false;
+                var pointerId = null;
+                var startX = 0;
+                var startY = 0;
+                var deltaX = 0;
+                var axisLocked = null; // 'x' | 'y' | null
+
+                function render(withTransition, dragPx) {
+                    track.style.transition = withTransition ?
+                        'transform .45s cubic-bezier(.22, .61, .36, 1)' : 'none';
+                    track.style.transform =
+                        'translate3d(calc(' + (-current * 100) + '% + ' + (dragPx || 0) + 'px), 0, 0)';
+                }
+
+                function goTo(index, withTransition) {
+                    current = ((index % count) + count) % count;
+                    render(withTransition !== false);
+                    if (opts.onChange) opts.onChange(current);
+                }
+
+                function next() { goTo(current + 1); }
+                function prev() { goTo(current - 1); }
+
+                function onPointerDown(e) {
+                    if (count < 2 || (e.pointerType === 'mouse' && e.button !== 0)) return;
+                    // Don't engage drag/pointer-capture for a tap anywhere inside the dots row
+                    // (a button, or the small gaps between them) — setPointerCapture on the
+                    // viewport retargets the subsequent synthetic click event to the viewport
+                    // itself, which would silently skip the dot's own click handler, and the
+                    // dots row has its own independent drag-to-scrub handling (see attachDotScrub).
+                    if (e.target.closest('button, .shot-dots, .lightbox-dots')) return;
+                    dragging = true;
+                    axisLocked = null;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    deltaX = 0;
+                    pointerId = e.pointerId;
+                    viewport.classList.add('is-dragging');
+                    try { viewport.setPointerCapture(pointerId); } catch (err) { /* noop */ }
+                    if (opts.onDragStart) opts.onDragStart();
+                }
+
+                function onPointerMove(e) {
+                    if (!dragging || e.pointerId !== pointerId) return;
+                    var dx = e.clientX - startX;
+                    var dy = e.clientY - startY;
+                    if (axisLocked === null && (Math.abs(dx) > AXIS_LOCK_PX || Math.abs(dy) > AXIS_LOCK_PX)) {
+                        axisLocked = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+                    }
+                    if (axisLocked === 'y') return; // let native vertical page scroll happen
+                    deltaX = dx;
+                    if (axisLocked === 'x') e.preventDefault();
+                    render(false, deltaX);
+                }
+
+                function onPointerUp(e) {
+                    if (!dragging || e.pointerId !== pointerId) return;
+                    dragging = false;
+                    viewport.classList.remove('is-dragging');
+                    try { viewport.releasePointerCapture(pointerId); } catch (err) { /* noop */ }
+                    var width = viewport.getBoundingClientRect().width || 1;
+                    var movedRatio = deltaX / width;
+                    var wasDrag = axisLocked === 'x' && Math.abs(deltaX) > 5;
+                    if (axisLocked === 'x' && Math.abs(movedRatio) > DRAG_THRESHOLD) {
+                        if (movedRatio < 0) next(); else prev();
+                    } else {
+                        render(true);
+                    }
+                    axisLocked = null;
+                    deltaX = 0;
+                    if (opts.onDragEnd) opts.onDragEnd(wasDrag);
+                }
+
+                viewport.addEventListener('pointerdown', onPointerDown);
+                viewport.addEventListener('pointermove', onPointerMove);
+                viewport.addEventListener('pointerup', onPointerUp);
+                viewport.addEventListener('pointercancel', onPointerUp);
+
+                render(false);
+
+                return {
+                    goTo: goTo,
+                    next: next,
+                    prev: prev,
+                    current: function () { return current; },
+                    destroy: function () {
+                        viewport.removeEventListener('pointerdown', onPointerDown);
+                        viewport.removeEventListener('pointermove', onPointerMove);
+                        viewport.removeEventListener('pointerup', onPointerUp);
+                        viewport.removeEventListener('pointercancel', onPointerUp);
+                    }
+                };
+            }
+
+            function buildDots(container, count, onSelect) {
+                container.innerHTML = '';
+                for (var i = 0; i < count; i++) {
+                    (function (index) {
+                        var dot = document.createElement('button');
+                        dot.type = 'button';
+                        dot.setAttribute('aria-label', 'Show image ' + (index + 1) + ' of ' + count);
+                        dot.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            onSelect(index);
+                        });
+                        container.appendChild(dot);
+                    })(i);
+                }
+            }
+
+            function setActiveDot(container, index) {
+                Array.prototype.forEach.call(container.children, function (dot, i) {
+                    if (dot.tagName === 'BUTTON') dot.classList.toggle('is-active', i === index);
+                });
+            }
+
+            function createDotIndicator(container) {
+                var indicator = document.createElement('span');
+                indicator.className = 'dot-indicator';
+                container.appendChild(indicator);
+                // Capture the resting circle size ONCE, before any stretch animation ever
+                // runs — reading offsetWidth later, mid-animation, would return whatever
+                // elongated width the pill currently has, not the true "circle" size.
+                indicator.__baseSize = indicator.offsetWidth || 9;
+                return indicator;
+            }
+
+            var DOT_STRETCH_MS = 190; // phase 1: pill stretches to connect old + new position
+            var DOT_SNAP_MS = 280;    // phase 2: pill contracts back into a circle, with a springy overshoot
+
+            function dotButtons(container) {
+                return Array.prototype.filter.call(container.children, function (el) {
+                    return el.tagName === 'BUTTON';
+                });
+            }
+
+            function dotCenterX(btn) {
+                return btn.offsetLeft + btn.offsetWidth / 2;
+            }
+
+            // "Liquid dot" indicator: moving to a new index doesn't just slide a circle —
+            // it stretches into a pill connecting the old and new dot (phase 1), then
+            // contracts back into a circle at the new dot with a little springy snap
+            // (phase 2), like a drop of liquid reaching over and pulling itself in.
+            function positionDotIndicator(container, indicator, index) {
+                if (!indicator) return;
+                var buttons = dotButtons(container);
+                var btn = buttons[index];
+                if (!btn) return;
+
+                var size = indicator.__baseSize || indicator.offsetWidth || 9;
+                var targetCenter = dotCenterX(btn);
+                var targetLeft = targetCenter - size / 2;
+
+                var prevIndex = indicator.__index;
+                indicator.__index = index;
+
+                if (prevIndex === undefined || prevIndex === index) {
+                    // First placement, or no real move — just sit there, no stretch.
+                    indicator.style.transition = 'none';
+                    indicator.style.width = size + 'px';
+                    indicator.style.left = targetLeft + 'px';
+                    return;
+                }
+
+                var prevBtn = buttons[prevIndex];
+                var prevCenter = prevBtn ? dotCenterX(prevBtn) : targetCenter;
+                var stretchLeft = Math.min(prevCenter, targetCenter) - size / 2;
+                var stretchWidth = Math.abs(targetCenter - prevCenter) + size;
+
+                // Phase 1 — stretch into a pill spanning from the old dot to the new one.
+                indicator.style.transition =
+                    'left ' + DOT_STRETCH_MS + 'ms ease-out, width ' + DOT_STRETCH_MS + 'ms ease-out';
+                indicator.style.left = stretchLeft + 'px';
+                indicator.style.width = stretchWidth + 'px';
+
+                clearTimeout(indicator.__snapTimer);
+                indicator.__snapTimer = setTimeout(function () {
+                    // Phase 2 — the tail catches up and it pinches back into a circle.
+                    indicator.style.transition =
+                        'left ' + DOT_SNAP_MS + 'ms cubic-bezier(.34, 1.56, .64, 1), ' +
+                        'width ' + DOT_SNAP_MS + 'ms cubic-bezier(.34, 1.56, .64, 1)';
+                    indicator.style.left = targetLeft + 'px';
+                    indicator.style.width = size + 'px';
+                }, DOT_STRETCH_MS);
+            }
+
+            // Lets the whole dots row act as a mini scrubber: press anywhere on it (mouse
+            // drag or touch swipe, same unified Pointer Events approach as the image
+            // carousel) and drag across the dots to jump straight to whichever one is
+            // under the pointer, animating between them exactly like a click would.
+            function attachDotScrub(container, getButtons, gotoFn, hooks) {
+                hooks = hooks || {};
+                var dragging = false;
+                var pointerId = null;
+
+                function nearestIndex(clientX) {
+                    var buttons = getButtons();
+                    var best = 0;
+                    var bestDist = Infinity;
+                    buttons.forEach(function (btn, i) {
+                        var rect = btn.getBoundingClientRect();
+                        var dist = Math.abs(clientX - (rect.left + rect.width / 2));
+                        if (dist < bestDist) {
+                            bestDist = dist;
+                            best = i;
+                        }
+                    });
+                    return best;
+                }
+
+                function onPointerDown(e) {
+                    if (e.pointerType === 'mouse' && e.button !== 0) return;
+                    dragging = true;
+                    pointerId = e.pointerId;
+                    container.classList.add('is-dragging');
+                    try { container.setPointerCapture(pointerId); } catch (err) { /* noop */ }
+                    if (hooks.onDragStart) hooks.onDragStart();
+                    gotoFn(nearestIndex(e.clientX));
+                }
+
+                function onPointerMove(e) {
+                    if (!dragging || e.pointerId !== pointerId) return;
+                    e.preventDefault();
+                    gotoFn(nearestIndex(e.clientX));
+                }
+
+                function onPointerUp(e) {
+                    if (!dragging || e.pointerId !== pointerId) return;
+                    dragging = false;
+                    container.classList.remove('is-dragging');
+                    try { container.releasePointerCapture(pointerId); } catch (err) { /* noop */ }
+                    if (hooks.onDragEnd) hooks.onDragEnd();
+                }
+
+                container.addEventListener('pointerdown', onPointerDown);
+                container.addEventListener('pointermove', onPointerMove);
+                container.addEventListener('pointerup', onPointerUp);
+                container.addEventListener('pointercancel', onPointerUp);
+                // A drag that started on this container has pointer capture set on it, which
+                // makes the browser retarget the synthetic click afterwards to THIS element —
+                // that click still bubbles up to the slider's own click listener (which opens
+                // the lightbox) unless stopped here. A plain tap on one button is already
+                // covered by that button's own stopPropagation in buildDots.
+                container.addEventListener('click', function (e) { e.stopPropagation(); });
+            }
+
+            /* ---------- shared lightbox gallery (built once, reused by every card) ---------- */
+            var lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.setAttribute('role', 'dialog');
+            lightbox.setAttribute('aria-modal', 'true');
+            lightbox.setAttribute('aria-hidden', 'true');
+            lightbox.innerHTML =
+                '<button type="button" class="lightbox-close" aria-label="Close">&times;</button>' +
+                '<button type="button" class="lightbox-nav prev" aria-label="Previous image">&#10094;</button>' +
+                '<div class="lightbox-viewport"><div class="lightbox-track"></div></div>' +
+                '<button type="button" class="lightbox-nav next" aria-label="Next image">&#10095;</button>' +
+                '<div class="lightbox-dots"></div>';
+            document.body.appendChild(lightbox);
+
+            var lightboxCloseBtn = lightbox.querySelector('.lightbox-close');
+            var lightboxPrevBtn = lightbox.querySelector('.lightbox-nav.prev');
+            var lightboxNextBtn = lightbox.querySelector('.lightbox-nav.next');
+            var lightboxViewport = lightbox.querySelector('.lightbox-viewport');
+            var lightboxTrack = lightbox.querySelector('.lightbox-track');
+            var lightboxDots = lightbox.querySelector('.lightbox-dots');
+            var lightboxCarousel = null;
+            var lastFocused = null;
+            var onLightboxClose = null;
+
+            function openGalleryLightbox(sourceImgs, startIndex, onClose) {
+                lightboxTrack.innerHTML = '';
+                sourceImgs.forEach(function (img) {
+                    var clone = document.createElement('img');
+                    clone.src = img.currentSrc || img.src;
+                    clone.alt = img.alt || '';
+                    clone.draggable = false;
+                    lightboxTrack.appendChild(clone);
+                });
+
+                if (lightboxCarousel) lightboxCarousel.destroy();
+
+                var hasMultiple = sourceImgs.length > 1;
+                lightboxPrevBtn.hidden = !hasMultiple;
+                lightboxNextBtn.hidden = !hasMultiple;
+                lightboxDots.hidden = !hasMultiple;
+
+                var indicator = null;
+                if (hasMultiple) {
+                    buildDots(lightboxDots, sourceImgs.length, function (i) { lightboxCarousel.goTo(i); });
+                    indicator = createDotIndicator(lightboxDots);
+                }
+
+                lightboxCarousel = makeCarousel(lightboxViewport, lightboxTrack, sourceImgs.length, {
+                    startIndex: startIndex,
+                    onChange: function (index) {
+                        if (hasMultiple) {
+                            setActiveDot(lightboxDots, index);
+                            positionDotIndicator(lightboxDots, indicator, index);
+                        }
+                    }
+                });
+                if (hasMultiple) {
+                    setActiveDot(lightboxDots, startIndex);
+                    positionDotIndicator(lightboxDots, indicator, startIndex);
+                }
+
+                onLightboxClose = onClose || null;
+                lastFocused = document.activeElement;
+                lightbox.classList.add('is-open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                lightboxCloseBtn.focus();
+            }
+
+            function closeLightbox() {
+                if (!lightbox.classList.contains('is-open')) return;
+                lightbox.classList.remove('is-open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (onLightboxClose) onLightboxClose();
+                onLightboxClose = null;
+                if (lastFocused && lastFocused.focus) lastFocused.focus();
+            }
+
+            lightboxCloseBtn.addEventListener('click', closeLightbox);
+            lightboxPrevBtn.addEventListener('click', function () { if (lightboxCarousel) lightboxCarousel.prev(); });
+            lightboxNextBtn.addEventListener('click', function () { if (lightboxCarousel) lightboxCarousel.next(); });
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (!lightbox.classList.contains('is-open')) return;
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft' && lightboxCarousel) lightboxCarousel.prev();
+                else if (e.key === 'ArrowRight' && lightboxCarousel) lightboxCarousel.next();
+            });
+
+            attachDotScrub(lightboxDots, function () {
+                return Array.prototype.filter.call(lightboxDots.children, function (el) {
+                    return el.tagName === 'BUTTON';
+                });
+            }, function (i) { if (lightboxCarousel) lightboxCarousel.goTo(i); });
+
+            /* ---------- one auto-playing, swipeable slider per feature card ---------- */
+            sliders.forEach(function (slider) {
+                var track = slider.querySelector('.shot-track');
+                var imgs = Array.prototype.slice.call(track.querySelectorAll('img'));
+                if (!imgs.length) return;
+
+                var timer = null;
+                var suppressClick = false;
+                var dotsEl = null;
+                var dotIndicator = null;
+
+                if (imgs.length > 1) {
+                    dotsEl = document.createElement('div');
+                    dotsEl.className = 'shot-dots';
+                    buildDots(dotsEl, imgs.length, function (i) {
+                        carousel.goTo(i);
+                        stop();
+                        start();
+                    });
+                    dotIndicator = createDotIndicator(dotsEl);
+                    slider.appendChild(dotsEl);
+                    setActiveDot(dotsEl, 0);
+                    positionDotIndicator(dotsEl, dotIndicator, 0);
+                    attachDotScrub(dotsEl, function () {
+                        return Array.prototype.filter.call(dotsEl.children, function (el) {
+                            return el.tagName === 'BUTTON';
+                        });
+                    }, function (i) { carousel.goTo(i); }, {
+                        onDragStart: function () { stop(); },
+                        onDragEnd: function () {
+                            if (!lightbox.classList.contains('is-open')) start();
+                        }
+                    });
+                }
+
+                var carousel = makeCarousel(slider, track, imgs.length, {
+                    onChange: function (index) {
+                        if (dotsEl) {
+                            setActiveDot(dotsEl, index);
+                            positionDotIndicator(dotsEl, dotIndicator, index);
+                        }
+                    },
+                    onDragStart: function () { stop(); },
+                    onDragEnd: function (wasDrag) {
+                        suppressClick = wasDrag;
+                        if (!lightbox.classList.contains('is-open')) start();
+                    }
+                });
+
+                function next() { carousel.next(); }
+
+                function start() {
+                    if (reduceMotion || imgs.length < 2 || timer) return;
+                    var interval = parseInt(slider.dataset.interval, 10) || 4500;
+                    timer = setInterval(next, interval);
+                }
+
+                function stop() {
+                    if (timer) {
+                        clearInterval(timer);
+                        timer = null;
+                    }
+                }
+
+                slider.addEventListener('click', function () {
+                    if (suppressClick) {
+                        suppressClick = false;
+                        return;
+                    }
+                    stop();
+                    openGalleryLightbox(imgs, carousel.current(), function () {
+                        if (slider.getBoundingClientRect().top < window.innerHeight) start();
+                    });
+                });
+
+                slider.addEventListener('mouseenter', stop);
+                slider.addEventListener('mouseleave', function () {
+                    if (!lightbox.classList.contains('is-open')) start();
+                });
+
+                if ('IntersectionObserver' in window) {
+                    var io = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (lightbox.classList.contains('is-open')) return;
+                            if (entry.isIntersecting) start();
+                            else stop();
+                        });
+                    }, { threshold: 0.2 });
+                    io.observe(slider);
+                } else {
+                    start();
+                }
+            });
         })();
     </script>
 
