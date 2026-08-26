@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End User License Agreement — Odoo DevKit</title>
+    <meta name="description" content="The Developer EULA that governs use of Odoo DevKit, licensed by OdoNexus.">
+    <meta name="robots" content="noindex">
+    <link rel="canonical" href="https://odonexus.github.io/odoo-devkit/eula.html">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+    <style>
+        :root {
+            --bg: #0a0908;
+            --bg-elev: #151310;
+            --border: rgba(245, 185, 59, 0.14);
+            --border-strong: rgba(245, 185, 59, 0.28);
+            --gold: #f5b93b;
+            --gold-soft: #f7cb6c;
+            --purple: #c583ae;
+            --text: #f3efe7;
+            --text-muted: #a79f8e;
+            --text-dim: #918777;
+            --radius: 10px;
+            --max: 780px;
+            --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+            --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--gold-soft);
+        }
+
+        code {
+            font-family: var(--mono);
+            font-size: 0.92em;
+            color: var(--gold-soft);
+            background: rgba(245, 185, 59, 0.08);
+            padding: 1px 6px;
+            border-radius: 5px;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand img {
+            height: 22px;
+            display: block;
+        }
+
+        .nav a.back {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14.5px;
+            font-weight: 500;
+        }
+
+        .nav a.back:hover {
+            color: var(--text);
+        }
+
+        main {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 56px 28px 88px;
+        }
+
+        .doc-meta {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: var(--mono);
+            font-size: 30px;
+            letter-spacing: -0.02em;
+            margin: 0 0 12px;
+        }
+
+        .lede {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin: 0 0 28px;
+        }
+
+        .notice {
+            border: 1px solid var(--border-strong);
+            border-left: 3px solid var(--gold);
+            border-radius: var(--radius);
+            background: rgba(245, 185, 59, 0.06);
+            padding: 16px 20px;
+            font-size: 14.5px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .notice b,
+        .notice strong {
+            color: var(--gold-soft);
+        }
+
+        .notice p {
+            margin: 0;
+        }
+
+        h2 {
+            font-family: var(--mono);
+            font-size: 18px;
+            margin: 40px 0 12px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        h2:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        h3 {
+            font-family: var(--mono);
+            font-size: 15px;
+            color: var(--text);
+            margin: 28px 0 10px;
+        }
+
+        p,
+        li {
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 28px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 13.5px;
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav">
+            <a class="brand" href="index.html">
+                <img src="assets/img/logo.svg" alt="Odoo DevKit" height="22">
+            </a>
+            <a class="back" href="index.html">&larr; Back to Odoo DevKit</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="doc-meta">Legal</div>
+        <h1>Odoo DevKit — Developer End User License Agreement</h1>
+        <p class="lede"><strong>Last updated:</strong> 2026-08-25 &middot; <strong>Developer and Licensor:</strong>
+            OdoNexus (&quot;Developer&quot;, &quot;Licensor&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;).</p>
+        <div class="notice"><p><strong>This is a Developer EULA.</strong> The Developer is the sole licensor of Odoo DevKit. JetBrains s.r.o.,
+        which has its registered office at Na Hřebenech II 1718/8, Prague, 14000, Czech Republic,
+        registered with the Commercial Register kept by the Municipal Court of Prague, Section C, file
+        86211, ID No. 265 02 275 (&quot;JetBrains&quot;), operates JetBrains Marketplace and acts solely as a
+        reseller of the Plugin. <strong>JetBrains is not a party to this Agreement.</strong> Your contract for use of
+        the Plugin is with the Developer. JetBrains has no obligation under this Agreement to provide
+        maintenance, support, warranties, indemnification, or any other services for the Plugin.</p></div>
+        <p>This Developer End User License Agreement (&quot;Agreement&quot; or &quot;EULA&quot;) is concluded between you and the
+        Developer with respect to Odoo DevKit. By installing, activating, or using Odoo DevKit, you agree to
+        be bound by this Agreement. If you do not agree, do not install, activate, or use the Plugin.</p>
+        <h2 id="definitions">1. Definitions</h2>
+        <p>For purposes of this Agreement:</p>
+        <ul>
+        <li><strong>&quot;Confirmation&quot;</strong> means an email or other confirmation from JetBrains describing your right to
+        use a Paid Plugin and containing information about your license, Trial, or Subscription.</li>
+        <li><strong>&quot;Documentation&quot;</strong> means the then-current technical and user documentation for the Plugin made
+        available through JetBrains Marketplace or by the Developer.</li>
+        <li><strong>&quot;Fallback Date&quot;</strong> means the date falling twelve (12) months before the expiration of your
+        Subscription.</li>
+        <li><strong>&quot;Fallback Version&quot;</strong> means the most recent Plugin Version that the Developer made available for
+        public purchase before the Fallback Date, together with any bug-fix updates made available for
+        that Plugin Version. It excludes other updates or upgrades used between the Fallback Date and the
+        expiration of the Subscription.</li>
+        <li><strong>&quot;Free Plugin&quot;</strong> means a Plugin offered at no cost.</li>
+        <li><strong>&quot;JetBrains Marketplace&quot;</strong> means a platform operated by JetBrains or a JetBrains affiliate on
+        which JetBrains markets plugins for JetBrains products, including <a href="https://plugins.jetbrains.com/">https://plugins.jetbrains.com/</a>.</li>
+        <li><strong>&quot;Paid Plugin&quot;</strong> means a Plugin offered for a one-time fee or a recurring subscription fee.</li>
+        <li><strong>&quot;Plugin&quot;</strong> means Odoo DevKit, including any generally available updates or upgrades that you are
+        entitled to use under this Agreement.</li>
+        <li><strong>&quot;Plugin User&quot;</strong> means an individual authorized to access and use the Plugin under the applicable
+        license or Subscription plan.</li>
+        <li><strong>&quot;Plugin Version&quot;</strong> means a release, update, or upgrade of the Plugin other than a release
+        identified by the Developer as solely a bug-fix update.</li>
+        <li><strong>&quot;Subscription&quot;</strong> means your time-limited right to use a Paid Plugin during the Subscription
+        Period.</li>
+        <li><strong>&quot;Subscription Period&quot;</strong> means the period stated in your Confirmation.</li>
+        <li><strong>&quot;Trial&quot;</strong> means a time-limited evaluation right stated in your Confirmation or the Plugin's
+        JetBrains Marketplace listing.</li>
+        <li><strong>&quot;you&quot;</strong> or <strong>&quot;your&quot;</strong> means the individual or legal entity accepting this Agreement.</li>
+        </ul>
+        <h2 id="grant-of-license">2. Grant of License</h2>
+        <p>Subject to your compliance with this Agreement and payment of all applicable fees, the Developer
+        grants you a limited, worldwide, non-exclusive, non-transferable, and non-sublicensable license to:</p>
+        <ul>
+        <li>install the Plugin in a supported JetBrains product;</li>
+        <li>use the Plugin for your internal software-development purposes in accordance with your
+        Confirmation, Documentation, Subscription plan, and the limits in this Agreement;</li>
+        <li>permit no more Plugin Users to access or use the Plugin than your Confirmation or Subscription
+        plan allows; and</li>
+        <li>make backup copies solely for archival and disaster-recovery purposes.</li>
+        </ul>
+        <p>The license includes generally available updates and upgrades released during the period in which
+        you are entitled to use them, subject to the limitations applicable to a Fallback Version. This
+        Agreement licenses the Plugin; it does not sell or transfer ownership of the Plugin or any of its
+        components to you.</p>
+        <h2 id="restrictions">3. Restrictions</h2>
+        <p>Unless the Developer expressly authorizes it in writing, you may not, and may not permit any third
+        party to:</p>
+        <ul>
+        <li>copy the Plugin, except for the archival and disaster-recovery copies permitted by Section 2;</li>
+        <li>modify, translate, adapt, or create derivative works of the Plugin;</li>
+        <li>reverse engineer, decompile, disassemble, or otherwise attempt to derive the Plugin's source code;</li>
+        <li>rent, lease, lend, sell, sublicense, redistribute, assign, or otherwise transfer the Plugin or any
+        right granted under this Agreement;</li>
+        <li>share credentials, license keys, or access in a manner that exceeds the number of permitted Plugin
+        Users;</li>
+        <li>remove, obscure, or alter any proprietary notice contained in or displayed by the Plugin; or</li>
+        <li>circumvent or attempt to circumvent any licensing, Trial, access, or usage restriction in the
+        Plugin.</li>
+        </ul>
+        <p>The restrictions on modification, reverse engineering, decompilation, and disassembly apply only to
+        the maximum extent permitted by applicable law. They do not restrict a right that applicable law
+        expressly provides and does not allow the parties to waive by contract.</p>
+        <h2 id="license-types-subscription-trial-and-termination">4. License Types, Subscription, Trial, and Termination</h2>
+        <h3 id="license-duration">4.1. License duration</h3>
+        <p>The license type and duration are determined by your Confirmation:</p>
+        <ul>
+        <li>a license for a Free Plugin or a Paid Plugin purchased for a one-time license fee is perpetual;</li>
+        <li>a recurring-fee license is valid only for the applicable monthly or annual Subscription Period;
+        and</li>
+        <li>a Trial is valid only for the Trial period stated in the Confirmation or JetBrains Marketplace
+        listing.</li>
+        </ul>
+        <p>Any change to the availability or duration of future Trials does not shorten a Trial already granted
+        to you, except where the Confirmation or applicable law permits otherwise.</p>
+        <h3 id="subscription-limits">4.2. Subscription limits</h3>
+        <p>You must use a Subscription in accordance with the limits in your Subscription plan and
+        Confirmation. In particular, the number of Plugin Users must not exceed the number for which you
+        have purchased the Subscription.</p>
+        <h3 id="fallback-license">4.3. Fallback license</h3>
+        <p>If your Confirmation expressly provides a fallback license, then after the Subscription expires
+        without renewal, your license under Section 2 continues on a perpetual, royalty-free, non-exclusive,
+        non-transferable, and non-sublicensable basis solely for the Fallback Version. The fallback license
+        is granted only if you complied with this Agreement and paid the applicable Subscription fees in
+        full and without interruption for at least the preceding twelve (12) months.</p>
+        <p>If your Confirmation does not provide a fallback license, your right to use the Plugin ends when the
+        Subscription or Trial expires.</p>
+        <h3 id="termination-for-breach">4.4. Termination for breach</h3>
+        <p>The Developer may terminate this Agreement if you materially breach it and, where the breach is
+        capable of cure, fail to cure the breach within a reasonable period after receiving notice. The
+        Agreement may be terminated immediately where a cure period is not required by applicable law or
+        where the breach cannot reasonably be cured.</p>
+        <p>When your license expires or this Agreement is terminated, you must stop using and uninstall every
+        Plugin Version you are no longer entitled to use and destroy unauthorized copies. Sections 3, 5, 7,
+        8, 9, and 10 survive expiration or termination to the extent necessary to give them effect.</p>
+        <h2 id="intellectual-property">5. Intellectual Property</h2>
+        <p>The Plugin is protected by copyright and other intellectual-property laws and treaties. The
+        Developer or its licensors own all title, copyright, and other intellectual-property rights in the
+        Plugin. All rights not expressly granted under this Agreement are reserved.</p>
+        <h2 id="updates-and-support">6. Updates and Support</h2>
+        <p>During the period in which you are entitled to use the Plugin, you may use generally available
+        updates and upgrades released for your license, subject to any compatibility requirements in the
+        Documentation and the limitations applicable to a Fallback Version.</p>
+        <p>The Developer may provide bug fixes, updates, upgrades, and support through the Plugin's homepage
+        (<a href="https://odonexus.github.io/odoo-devkit/">https://odonexus.github.io/odoo-devkit/</a>) and issue tracker
+        (<a href="https://github.com/odonexus/odoo-devkit/issues">https://github.com/odonexus/odoo-devkit/issues</a>). Except as required by applicable law or expressly
+        stated in your Confirmation, the Developer is not obligated to create or release any particular
+        update, upgrade, fix, feature, or level of support, and may discontinue future development or support
+        of the Plugin.</p>
+        <h2 id="disclaimer-of-warranty">7. Disclaimer of Warranty</h2>
+        <p>THE PLUGIN IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot;, WITHOUT WARRANTIES OF ANY KIND. YOUR USE OF THE
+        PLUGIN IS AT YOUR OWN RISK. THE DEVELOPER PROVIDES NO WARRANTY AS TO THE PLUGIN'S USE OR PERFORMANCE.
+        TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE DEVELOPER DISCLAIMS ALL WARRANTIES AND
+        CONDITIONS, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE,
+        NON-INFRINGEMENT, AND WARRANTIES RELATING TO THE PROVISION OF OR FAILURE TO PROVIDE SUPPORT SERVICES.</p>
+        <p>THE DEVELOPER DOES NOT WARRANT THAT THE PLUGIN IS ACCURATE, RELIABLE, OR CORRECT; THAT IT MEETS YOUR
+        REQUIREMENTS; THAT IT WILL BE AVAILABLE AT ANY PARTICULAR TIME OR LOCATION, UNINTERRUPTED, OR SECURE;
+        THAT ANY DEFECT OR ERROR WILL BE CORRECTED; OR THAT IT IS FREE OF VIRUSES OR OTHER HARMFUL
+        COMPONENTS. THE PLUGIN'S SUGGESTIONS, COMPLETIONS, NAVIGATION, INSPECTIONS, AND OTHER OUTPUT DO NOT
+        REPLACE YOUR OWN REVIEW OF YOUR CODE. EXCEPT AS REQUIRED BY APPLICABLE LAW, UPDATES AND UPGRADES ARE
+        PROVIDED ONLY ON AN &quot;AS AVAILABLE&quot; BASIS, AT THE DEVELOPER'S SOLE DISCRETION.</p>
+        <h2 id="limitation-of-liability">8. Limitation of Liability</h2>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL THE DEVELOPER BE LIABLE FOR ANY
+        DIRECT OR INDIRECT COSTS, LOSSES, OR DAMAGES ASSOCIATED WITH THE USE OF, OR INABILITY TO USE, THE
+        PLUGIN. THE DEVELOPER WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR
+        PUNITIVE DAMAGES, OR FOR ANY LOST PROFITS, LOST DATA, BUSINESS INTERRUPTION, OR LOST BUSINESS
+        OPPORTUNITY, REGARDLESS OF THE LEGAL THEORY AND EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE DEVELOPER'S AGGREGATE LIABILITY ARISING OUT OF
+        OR RELATED TO THIS AGREEMENT OR THE PLUGIN WILL NOT EXCEED THE FEES YOU PAID FOR THE PLUGIN THROUGH
+        JETBRAINS MARKETPLACE DURING THE THREE-MONTH PERIOD PRECEDING THE EVENT GIVING RISE TO THE CLAIM. THIS
+        LIMITATION APPLIES EVEN IF THE DEVELOPER HAS BEEN ADVISED OF THE POSSIBILITY OF LIABILITY EXCEEDING
+        THAT AMOUNT AND NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY.</p>
+        <p><strong>JETBRAINS' AND ITS AFFILIATES' LIABILITY IS EXCLUDED IN ITS ENTIRETY BECAUSE NEITHER JETBRAINS NOR
+        ANY JETBRAINS AFFILIATE IS A PARTY TO THE CONTRACTUAL RELATIONSHIP BETWEEN THE DEVELOPER AND YOU.</strong></p>
+        <p>Nothing in this Agreement excludes or limits any liability or statutory right that cannot lawfully
+        be excluded or limited.</p>
+        <h2 id="data-and-privacy">9. Data and Privacy</h2>
+        <p>The Plugin performs its code analysis and indexing locally in your JetBrains product. The Plugin does
+        not transmit, upload, or store your source code on a server operated by the Developer. JetBrains may
+        process information necessary for Marketplace licensing, activation, billing, and operation of its
+        products under JetBrains' own agreements and privacy policy. Such processing is performed by
+        JetBrains, not by the Developer under this Agreement.</p>
+        <h2 id="miscellaneous">10. Miscellaneous</h2>
+        <ul>
+        <li><strong>Entire agreement.</strong> This Agreement, together with your Confirmation and the applicable
+        Documentation, is the entire agreement between you and the Developer regarding the Plugin and
+        supersedes prior understandings on that subject. The Confirmation controls only with respect to
+        the applicable license type, Subscription or Trial period, number of Plugin Users, and any
+        expressly granted fallback license; this Agreement controls in all other respects.</li>
+        <li><strong>Severability.</strong> If a provision of this Agreement is held invalid or unenforceable, it will be
+        enforced to the maximum extent permitted, and the remaining provisions will remain in effect.</li>
+        <li><strong>No waiver.</strong> A failure or delay in enforcing a provision is not a waiver of the right to enforce
+        it later.</li>
+        <li><strong>Assignment.</strong> You may not assign this Agreement without the Developer's prior written consent.
+        The Developer may assign this Agreement in connection with a merger, reorganization, acquisition,
+        or sale of all or substantially all relevant assets, subject to applicable law.</li>
+        <li><strong>Changes.</strong> The Developer may update this Agreement from time to time. The Developer will identify
+        the current version by its &quot;Last updated&quot; date and will provide any notice required by applicable
+        law. A material change will apply prospectively and will not reduce rights already granted for a
+        fully paid perpetual license, except where you expressly agree or applicable law permits otherwise.</li>
+        <li><strong>Electronic communications.</strong> You agree that confirmations, notices, and other communications may
+        be provided electronically, subject to applicable law.</li>
+        </ul>
+        <h2 id="contact">Contact</h2>
+        <ul>
+        <li>Developer/Licensor: <strong>OdoNexus</strong></li>
+        <li>Home: <a href="https://odonexus.github.io/odoo-devkit/">https://odonexus.github.io/odoo-devkit/</a></li>
+        <li>Issue tracker: <a href="https://github.com/odonexus/odoo-devkit/issues">https://github.com/odonexus/odoo-devkit/issues</a></li>
+        <li>Email: <a href="mailto:odonexussoft@gmail.com">odonexussoft@gmail.com</a></li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 OdoNexus</p>
+    </footer>
+
+</body>
+
+</html>

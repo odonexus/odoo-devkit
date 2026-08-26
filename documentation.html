@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project setup — Odoo DevKit documentation</title>
+    <meta name="description"
+        content="Set up an Odoo project for Odoo DevKit using project dependencies or Project Structure content roots.">
+    <meta name="theme-color" content="#0a0908">
+    <link rel="canonical" href="https://odonexus.github.io/odoo-devkit/documentation.html">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+    <style>
+        :root {
+            --bg: #0a0908;
+            --bg-elev: #151310;
+            --bg-elev-2: #1c1913;
+            --border: rgba(245, 185, 59, .14);
+            --border-strong: rgba(245, 185, 59, .28);
+            --gold: #f5b93b;
+            --gold-soft: #f7cb6c;
+            --purple: #c583ae;
+            --text: #f3efe7;
+            --text-muted: #a79f8e;
+            --text-dim: #918777;
+            --radius: 12px;
+            --max: 1080px;
+            --mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+            --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: var(--gold-soft); }
+        code {
+            font-family: var(--mono);
+            font-size: .9em;
+            color: var(--gold-soft);
+            background: rgba(245, 185, 59, .08);
+            border-radius: 5px;
+            padding: 1px 5px;
+        }
+        header { border-bottom: 1px solid var(--border); }
+        .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+        .nav { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+        .brand { display: flex; align-items: center; text-decoration: none; }
+        .brand img { display: block; height: 22px; }
+        .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; }
+        .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--gold-soft); }
+        .github {
+            color: var(--text) !important;
+            border: 1px solid var(--border-strong);
+            border-radius: 7px;
+            padding: 7px 11px;
+        }
+        .github:hover { border-color: var(--gold); }
+        .skip-link { position: absolute; left: -999px; }
+        .skip-link:focus { left: 16px; top: 16px; z-index: 5; background: var(--gold); color: #17120a; padding: 8px 12px; border-radius: 6px; }
+
+        .hero { padding: 82px 0 48px; border-bottom: 1px solid var(--border); }
+        .eyebrow { color: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+        h1 { max-width: 760px; margin: 12px 0 16px; font-size: clamp(38px, 6vw, 64px); line-height: 1.08; letter-spacing: -.04em; }
+        .lede { max-width: 700px; margin: 0; color: var(--text-muted); font-size: 19px; }
+        .jump-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+        .jump-links a { border: 1px solid var(--border-strong); border-radius: 999px; padding: 7px 13px; color: var(--text); text-decoration: none; font-size: 14px; }
+        .jump-links a:hover { border-color: var(--gold); color: var(--gold-soft); }
+
+        main { padding-bottom: 80px; }
+        .section { padding-top: 64px; }
+        h2 { margin: 0 0 12px; font-size: 30px; line-height: 1.2; letter-spacing: -.025em; }
+        h3 { margin: 0; font-size: 18px; line-height: 1.35; }
+        .intro { max-width: 760px; margin: 0; color: var(--text-muted); }
+        .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+        .choice {
+            padding: 24px;
+            background: var(--bg-elev);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .choice.recommended { border-color: var(--border-strong); box-shadow: inset 0 1px 0 rgba(245, 185, 59, .08); }
+        .badge { display: inline-block; margin-bottom: 12px; color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+        .choice p { margin: 8px 0 0; color: var(--text-muted); }
+
+        .method { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 50px; padding: 62px 0; border-bottom: 1px solid var(--border); }
+        .method:first-of-type { margin-top: 58px; border-top: 1px solid var(--border); }
+        .method-label { color: var(--gold); font-family: var(--mono); font-size: 13px; }
+        .method-label strong { display: block; margin-top: 6px; color: var(--text); font-family: var(--sans); font-size: 24px; line-height: 1.2; }
+        .method-content > p { margin: 0 0 20px; color: var(--text-muted); }
+        .path {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            align-items: center;
+            margin: 4px 0 24px;
+            padding: 10px 13px;
+            background: var(--bg-elev-2);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 13px;
+        }
+        .path span { color: var(--text-dim); }
+        ol.steps { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; counter-reset: steps; }
+        ol.steps li { position: relative; min-height: 32px; padding-left: 50px; color: var(--text-muted); }
+        ol.steps li::before {
+            counter-increment: steps;
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            color: var(--gold-soft);
+            font-family: var(--mono);
+            font-size: 13px;
+            border: 1px solid var(--border-strong);
+            border-radius: 50%;
+        }
+        .note { margin-top: 26px; padding: 16px 18px; background: rgba(197, 131, 174, .08); border-left: 3px solid var(--purple); border-radius: 0 8px 8px 0; color: var(--text-muted); }
+        .note strong { color: var(--text); }
+        .screenshot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+        .screenshot {
+            margin: 0;
+            overflow: hidden;
+            background: var(--bg-elev-2);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+        .screenshot a { display: block; line-height: 0; }
+        .screenshot img { display: block; width: 100%; height: auto; transition: transform .2s ease; }
+        .screenshot a:hover img { transform: scale(1.015); }
+        .screenshot figcaption { padding: 11px 13px 12px; color: var(--text-muted); font-size: 13px; line-height: 1.45; }
+
+        .checklist { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
+        .check { padding: 18px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 9px; }
+        .check::before { content: "✓"; color: var(--gold); font-weight: 800; }
+        .check h3 { display: inline; margin-left: 8px; font-size: 15px; }
+        .check p { margin: 9px 0 0; color: var(--text-muted); font-size: 14px; }
+        .troubleshooting { margin-top: 52px; padding: 28px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); }
+        .troubleshooting h2 { font-size: 24px; }
+        .troubleshooting ul { margin: 16px 0 0; padding-left: 20px; color: var(--text-muted); }
+        .troubleshooting li + li { margin-top: 9px; }
+
+        footer { border-top: 1px solid var(--border); }
+        .foot { min-height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--text-dim); font-size: 14px; }
+        .foot-brand { display: flex; align-items: center; gap: 12px; }
+        .foot-brand img { height: 18px; }
+        .foot-links { display: flex; gap: 18px; }
+        .foot-links a { color: var(--text-muted); text-decoration: none; }
+        .foot-links a:hover { color: var(--gold-soft); }
+
+        @media (max-width: 720px) {
+            .nav { height: auto; min-height: 68px; padding-top: 16px; padding-bottom: 16px; align-items: flex-start; }
+            .nav-links { gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+            .nav-links .github { display: none; }
+            .hero { padding-top: 58px; }
+            .choice-grid, .checklist, .screenshot-grid { grid-template-columns: 1fr; }
+            .method { grid-template-columns: 1fr; gap: 20px; padding: 44px 0; }
+            .method:first-of-type { margin-top: 42px; }
+            .foot { padding-top: 24px; padding-bottom: 24px; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header>
+        <div class="wrap nav">
+            <a class="brand" href="index.html" aria-label="Odoo DevKit home">
+                <img src="assets/img/logo.svg" alt="Odoo DevKit" height="22">
+            </a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="index.html#features">Features</a>
+                <a href="documentation.html" aria-current="page">Documentation</a>
+                <a href="index.html#faq">FAQ</a>
+                <a class="github" href="https://github.com/odonexus/odoo-devkit" target="_blank" rel="noopener">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="hero">
+            <div class="wrap">
+                <div class="eyebrow">Documentation · Project setup</div>
+                <h1>Point DevKit at the right Odoo source.</h1>
+                <p class="lede">DevKit uses your project structure to connect each custom-addon folder to its matching Odoo core. This lets it resolve the correct version, core models and addon dependencies while you work.</p>
+                <div class="jump-links">
+                    <a href="#content-roots">Content roots</a>
+                    <a href="#dependencies">Project dependencies</a>
+                    <a href="#check">Check your setup</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="wrap">
+            <section class="section" aria-labelledby="choose-heading">
+                <h2 id="choose-heading">Choose one connection method</h2>
+                <p class="intro">Both methods work. For most workspaces, open each Odoo core as a project and add its custom addons as content roots. Use a project dependency only when the projects must remain separate.</p>
+                <div class="choice-grid">
+                    <article class="choice recommended">
+                        <span class="badge">Recommended</span>
+                        <h3>Project Structure content roots</h3>
+                        <p>Open an Odoo core as a project, then attach the custom-addon folder for that version in Project Structure.</p>
+                    </article>
+                    <article class="choice">
+                        <span class="badge">Alternative</span>
+                        <h3>Project dependencies</h3>
+                        <p>Keep each Odoo version as its own project and make the custom-addon project depend on the matching Odoo project.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="method" id="content-roots" aria-labelledby="content-roots-heading">
+                <div class="method-label">Recommended<strong id="content-roots-heading">Content roots</strong></div>
+                <div class="method-content">
+                    <p>Open the matching Odoo core as a project. Its folder is already its own content root; you only add the custom-addon folder for that Odoo version.</p>
+                    <div class="path">Settings <span>›</span> Project: &lt;your project&gt; <span>›</span> Project Structure</div>
+                    <ol class="steps">
+                        <li>Open the matching Odoo core as a project—for example, <code>D:\Odoo\odoo-19</code>. The core folder is added automatically as that project's content root.</li>
+                        <li>Open <strong>Settings</strong> → <strong>Project Structure</strong>, then select that Odoo project from the list.</li>
+                        <li>Click <strong>Add Content Root</strong> and select its custom-addon folder—for example, <code>D:\Odoo\my-addons-19</code>.</li>
+                        <li>Click <strong>Apply</strong> or <strong>OK</strong> and let the IDE finish indexing.</li>
+                    </ol>
+                    <div class="note"><strong>For another version, repeat per core.</strong> Open the other Odoo core and choose <strong>Attach</strong>, then select that project in <strong>Project Structure</strong> and add only its matching custom-addon folder. Do not add one Odoo core as the content root of another.</div>
+                    <div class="screenshot-grid">
+                        <figure class="screenshot">
+                            <a href="assets/img/documentation/setup/project_structure_setting.png" target="_blank" rel="noopener" aria-label="Open the Project Structure setup screenshot at full size">
+                                <img src="assets/img/documentation/setup/project_structure_setting.png" alt="Project Structure showing the odoo-19 project and its my-addons-19 content root" loading="lazy">
+                            </a>
+                            <figcaption>Select the Odoo project, then add only the custom-addon directory as its content root.</figcaption>
+                        </figure>
+                        <figure class="screenshot">
+                            <a href="assets/img/documentation/setup/project_structure_view.png" target="_blank" rel="noopener" aria-label="Open the Project view screenshot at full size">
+                                <img src="assets/img/documentation/setup/project_structure_view.png" alt="Project view with separate odoo-18 and odoo-19 projects, each with its custom addons" loading="lazy">
+                            </a>
+                            <figcaption>Each attached Odoo version keeps its own core and matching addon folder together.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <section class="method" id="dependencies" aria-labelledby="dependencies-heading">
+                <div class="method-label">Alternative<strong id="dependencies-heading">Project dependencies</strong></div>
+                <div class="method-content">
+                    <p>Use this setup when your custom addons and Odoo source are opened as separate projects. It is useful when a workspace contains several Odoo versions.</p>
+                    <div class="path">Settings <span>›</span> Project: &lt;your project&gt; <span>›</span> Project Dependencies</div>
+                    <ol class="steps">
+                        <li>Open both the custom-addon project and the Odoo source project in the same IDE window.</li>
+                        <li>Open <strong>Settings</strong>, select the custom-addon project, then open <strong>Project Dependencies</strong>.</li>
+                        <li>Enable the Odoo project that this addon targets—for example, let <code>my-addons-18</code> depend on <code>odoo-18</code>.</li>
+                        <li>Click <strong>Apply</strong> or <strong>OK</strong> and wait for indexing to complete.</li>
+                    </ol>
+                    <div class="note"><strong>One version per dependency.</strong> If you work with several Odoo checkouts, connect each custom-addon project only to the checkout it is built for. DevKit then keeps version-specific analysis separate.</div>
+                    <div class="screenshot-grid">
+                        <figure class="screenshot">
+                            <a href="assets/img/documentation/setup/project_depends_setting.png" target="_blank" rel="noopener" aria-label="Open the Project Dependencies setup screenshot at full size">
+                                <img src="assets/img/documentation/setup/project_depends_setting.png" alt="Project Dependencies settings showing an addon project linked to an Odoo project" loading="lazy">
+                            </a>
+                            <figcaption>Select the custom-addon project and enable the Odoo project it depends on.</figcaption>
+                        </figure>
+                        <figure class="screenshot">
+                            <a href="assets/img/documentation/setup/project_depends_view.png" target="_blank" rel="noopener" aria-label="Open the Project Dependencies view screenshot at full size">
+                                <img src="assets/img/documentation/setup/project_depends_view.png" alt="Project view showing Odoo cores and custom-addon projects as separate top-level projects" loading="lazy">
+                            </a>
+                            <figcaption>With dependencies, each core and custom-addon directory remains a separate project.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="check" aria-labelledby="check-heading">
+                <h2 id="check-heading">Check your setup</h2>
+                <p class="intro">After the IDE finishes indexing, DevKit should be able to follow the connection from an addon to the intended Odoo source.</p>
+                <div class="checklist">
+                    <div class="check"><h3>One intended checkout</h3><p>Each addon is linked to the Odoo version it actually runs against.</p></div>
+                    <div class="check"><h3>Launcher is visible</h3><p>Each Odoo core project includes <code>odoo-bin</code> or <code>setup/odoo</code>.</p></div>
+                    <div class="check"><h3>Indexing is complete</h3><p>Wait for the IDE before checking completion, navigation or run actions.</p></div>
+                </div>
+                <div class="troubleshooting">
+                    <h2>Troubleshooting</h2>
+                    <ul>
+                        <li>If DevKit cannot find the Odoo source, make sure its core was opened or attached as a project, rather than added under a different Odoo project.</li>
+                        <li>If it detects the wrong version, ensure the selected Odoo project has only its matching custom-addon folder as a content root.</li>
+                        <li>If a new connection is not recognized immediately, wait for indexing to finish, then reopen the file from the addon.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="wrap foot">
+            <div class="foot-brand"><img src="assets/img/logo.svg" alt="Odoo DevKit" height="18"><span>&copy; 2026 OdoNexus</span></div>
+            <div class="foot-links">
+                <a href="index.html">Home</a>
+                <a href="eula.html">License</a>
+                <a href="mailto:odonexussoft@gmail.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

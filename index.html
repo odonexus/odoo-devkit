@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odoo DevKit — Odoo-aware code intelligence for your IDE</title>
     <meta name="description"
-        content="Completion, navigation and type checking that read your real Odoo source: Python, XML views, QWeb and Owl templates, JavaScript, SQL. Scoped to each addon's Odoo version and depends list. Odoo 10+.">
+        content="Odoo-aware completion, navigation and type checking across Python, XML views, QWeb and Owl templates, JavaScript and SQL. Available today for PyCharm, with more IDEs planned.">
+    <meta name="theme-color" content="#0a0908">
     <meta property="og:title" content="Odoo DevKit — Odoo-aware code intelligence for your IDE">
     <meta property="og:description"
-        content="Completion, navigation and type checking scoped to each addon's Odoo version and depends list.">
+        content="Odoo-aware completion, navigation and type checking, scoped to each addon's Odoo version and dependencies. Available today for PyCharm.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://odonexus.github.io/odoo-devkit/">
+    <meta property="og:site_name" content="Odoo DevKit">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Odoo DevKit — Odoo-aware code intelligence for your IDE">
+    <meta name="twitter:description"
+        content="Odoo-aware completion, navigation and type checking. Available today for PyCharm, with more IDEs planned.">
     <link rel="canonical" href="https://odonexus.github.io/odoo-devkit/">
     <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 
@@ -52,6 +58,35 @@
             line-height: 1.55;
         }
 
+        p {
+            text-wrap: pretty;
+        }
+
+        h1,
+        h2,
+        h3 {
+            text-wrap: balance;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 300;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #221a08;
+            font-weight: 700;
+            text-decoration: none;
+            transform: translateY(-160%);
+            transition: transform .15s ease-out;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
         a {
             color: inherit;
         }
@@ -60,6 +95,18 @@
         svg {
             display: block;
             max-width: 100%;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         .wrap {
@@ -223,6 +270,11 @@
             grid-template-columns: 1.05fr 0.95fr;
             gap: 56px;
             align-items: center;
+        }
+
+        .hero-grid > *,
+        .feature-grid > * {
+            min-width: 0;
         }
 
         .eyebrow {
@@ -655,6 +707,10 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
             .caret {
                 animation: none;
             }
@@ -687,9 +743,6 @@
                 animation: none;
             }
 
-            .lightbox {
-                transition: none;
-            }
         }
 
         a:focus-visible,
@@ -776,7 +829,7 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 28px;
-            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+            transition: transform .2s ease-out, box-shadow .2s ease-out, border-color .2s ease-out;
         }
 
         .feature-block:hover {
@@ -864,7 +917,6 @@
             display: flex;
             width: 100%;
             height: 100%;
-            will-change: transform;
         }
 
         .shot-track img {
@@ -875,7 +927,7 @@
             -webkit-user-drag: none;
         }
 
-        .shot-slider .zoom-hint {
+        .shot-slider .preview-action {
             position: absolute;
             right: 12px;
             bottom: 12px;
@@ -892,15 +944,40 @@
             letter-spacing: .01em;
             opacity: 0;
             transform: translateY(4px);
-            transition: opacity .2s ease, transform .2s ease;
-            pointer-events: none;
+            transition: opacity .2s ease-out, transform .2s ease-out;
+            cursor: pointer;
             z-index: 3;
         }
 
-        .shot-slider:hover .zoom-hint,
-        .shot-slider:focus-visible .zoom-hint {
+        .shot-slider:hover .preview-action,
+        .shot-slider .preview-action:focus-visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .shot-pause {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border: 1px solid var(--border-strong);
+            border-radius: 50%;
+            background: rgba(10, 9, 8, 0.82);
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+            transition: background .15s ease-out, border-color .15s ease-out;
+        }
+
+        .shot-pause:hover {
+            background: rgba(245, 185, 59, 0.16);
+            border-color: var(--gold);
         }
 
         .shot-dots {
@@ -950,16 +1027,14 @@
         .shot-dots .dot-indicator {
             position: absolute;
             top: 50%;
+            left: 0;
             width: 9px;
             height: 9px;
-            /* an oversized radius always clamps to a full pill/capsule shape, no matter
-               how wide the JS-driven stretch animation below makes this element */
             border-radius: 999px;
             background: var(--gold);
             box-shadow: 0 0 8px rgba(245, 185, 59, 0.55);
             transform: translate(0, -50%);
-            /* left/width transitions are driven entirely by JS (two-phase stretch-then-snap
-               "liquid dot" animation) — see positionDotIndicator */
+            transform-origin: left center;
             pointer-events: none;
             z-index: 1;
         }
@@ -968,23 +1043,32 @@
             position: fixed;
             inset: 0;
             z-index: 200;
-            display: flex;
+            width: 100vw;
+            height: 100dvh;
+            max-width: none;
+            max-height: none;
+            margin: 0;
+            border: 0;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 18px;
-            padding: 48px;
+            padding: max(48px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-right))
+                max(48px, env(safe-area-inset-bottom)) max(48px, env(safe-area-inset-left));
             background: rgba(5, 4, 3, 0.88);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .25s ease;
+            color: var(--text);
         }
 
-        .lightbox.is-open {
-            opacity: 1;
-            visibility: visible;
+        .lightbox:not([open]) {
+            display: none;
+        }
+
+        .lightbox[open] {
+            display: flex;
+        }
+
+        .lightbox::backdrop {
+            background: transparent;
         }
 
         .lightbox-viewport {
@@ -1008,7 +1092,6 @@
             display: flex;
             width: 100%;
             height: 100%;
-            will-change: transform;
         }
 
         .lightbox-track img {
@@ -1063,12 +1146,14 @@
         .lightbox-dots .dot-indicator {
             position: absolute;
             top: 50%;
+            left: 0;
             width: 10px;
             height: 10px;
             border-radius: 999px;
             background: var(--gold);
             box-shadow: 0 0 8px rgba(245, 185, 59, 0.55);
             transform: translate(0, -50%);
+            transform-origin: left center;
             pointer-events: none;
             z-index: 1;
         }
@@ -1200,7 +1285,18 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .req-table tr:last-child td {
+        .req-table tbody th {
+            font-family: var(--sans);
+            font-size: inherit;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: normal;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .req-table tr:last-child td,
+        .req-table tr:last-child th {
             border-bottom: none;
         }
 
@@ -1235,7 +1331,7 @@
             border-radius: var(--radius);
             padding: 40px;
             box-shadow: 0 30px 80px -40px rgba(245, 185, 59, 0.15);
-            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+            transition: transform .2s ease-out, box-shadow .2s ease-out, border-color .2s ease-out;
         }
 
         .pricing-card:hover {
@@ -1498,10 +1594,32 @@
                 padding: 28px;
             }
         }
+
+        @media (max-width: 520px) {
+            .nav-cta > .btn-primary {
+                display: none;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-ctas .btn {
+                width: 100%;
+            }
+
+            .lightbox {
+                padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+                    max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <a class="skip-link" href="#top">Skip to main content</a>
 
     <header>
         <div class="wrap nav">
@@ -1512,6 +1630,7 @@
             <nav class="links" id="nav-links">
                 <a href="#features">Features</a>
                 <a href="#requirements">Requirements</a>
+                <a href="documentation.html">Documentation</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
             </nav>
@@ -1533,18 +1652,18 @@
         <section class="hero">
             <div class="wrap hero-grid">
                 <div>
-                    <div class="eyebrow"><span class="dot"></span> IDE Plugin for Odoo</div>
+                    <div class="eyebrow"><span class="dot"></span> Odoo intelligence for your IDE</div>
                     <h1>Your IDE finally<br>understands <span class="accent">Odoo</span>.</h1>
                     <p class="lede">
                         Completion, navigation and type checking that read your real Odoo source, across
-                        Python, XML views, QWeb and Owl templates, JavaScript and SQL. Every suggestion is
-                        scoped to the addon you're in: its Odoo version, its <code>depends</code> list.
+                        Python, XML views, QWeb and Owl templates, JavaScript and SQL. Odoo-aware suggestions
+                        are scoped to the addon you're in: its Odoo version and its <code>depends</code> list.
                     </p>
                     <div class="hero-ctas">
                         <a class="btn btn-primary btn-lg" href="#pricing">Get Odoo DevKit &nbsp;&rarr;</a>
                         <a class="btn btn-ghost btn-lg" href="#features">See what it does</a>
                     </div>
-                    <p class="hero-note">PyCharm &middot; Odoo 10+ &middot; 30-day free trial</p>
+                    <p class="hero-note">Available now for PyCharm &middot; More IDEs planned &middot; Odoo 10+</p>
                 </div>
 
                 <div class="editor" aria-hidden="true">
@@ -1660,7 +1779,7 @@
                             <div class="shot-track">
                                 <img src="assets/img/import_module.gif" alt="Odoo DevKit resolving and completing an import from another addon" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1682,7 +1801,7 @@
                                 <img src="assets/img/orm/2.gif" alt="Odoo DevKit flagging a field outside the addon's depends chain" loading="lazy" draggable="false">
                                 <img src="assets/img/orm/3.gif" alt="Odoo DevKit merging a model's _inherit classes into one completion popup" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1690,12 +1809,12 @@
                 <div class="feature-block">
                     <div class="feature-copy">
                         <div class="file-tab"><span class="dot" style="background:var(--purple)"></span>views.xml</div>
-                        <h3>Views your IDE can read</h3>
-                        <p>To most tools a <code>&lt;field name=&gt;</code> attribute or a domain tuple is
-                            plain text, so a typo surfaces only when the view fails to load. DevKit
-                            resolves the model behind it, following <code>inherit_id</code> and
-                            <code>&lt;xpath&gt;</code>, and a gutter icon jumps to the matched node in the
-                            parent view.</p>
+                        <h3>Beyond plain-text XML</h3>
+                        <p>To generic XML tooling, a <code>&lt;field name=&quot;&quot;&gt;</code> attribute or a
+                            domain tuple is just text, so a typo may surface only when the view loads.
+                            DevKit resolves the model behind each reference, follows
+                            <code>inherit_id</code> and <code>&lt;xpath&gt;</code> through inherited views,
+                            and adds gutter navigation to matched nodes in the parent view.</p>
                     </div>
                     <div class="feature-shot">
                         <div class="shot-slider">
@@ -1703,7 +1822,7 @@
                                 <img src="assets/img/xml/record.gif" alt="Odoo DevKit completing a field name attribute inside a view's XML" loading="lazy" draggable="false">
                                 <img src="assets/img/xml/record_inherit.gif" alt="A gutter icon on an xpath locator jumping to the matching node in the parent view" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1725,7 +1844,7 @@
                                 <img src="assets/img/external_id/csv.gif" alt="Ctrl+clicking an external id declared in a CSV data file" loading="lazy" draggable="false">
                                 <img src="assets/img/external_id/symbol.gif" alt="Finding an external id by name through Go to Symbol" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1745,7 +1864,7 @@
                             <div class="shot-track">
                                 <img src="assets/img/xml/template.gif" alt="Odoo DevKit completing a QWeb directive and context-variable expression" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1755,15 +1874,16 @@
                         <div class="file-tab"><span class="dot" style="background:#7fb4e8"></span>component.js</div>
                         <h3>The framework on top of JavaScript</h3>
                         <p>Odoo layers its own module system, Owl components, registries, services and
-                            hooks over plain JavaScript. DevKit follows all of it, so completion and
-                            navigation know what a registry key or a service name points at.</p>
+                            hooks over plain JavaScript. DevKit models those Odoo-specific layers so
+                            completion and navigation can resolve registry keys and service names.</p>
                     </div>
                     <div class="feature-shot">
                         <div class="shot-slider">
                             <div class="shot-track">
                                 <img src="assets/img/js/component.gif" alt="Odoo DevKit completing and highlighting Owl component syntax" loading="lazy" draggable="false">
+                                <img src="assets/img/js/inline_template.gif" alt="Odoo DevKit completing an inline Owl template written as a tagged xml template literal" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1772,17 +1892,34 @@
                     <div class="feature-copy">
                         <div class="file-tab"><span class="dot" style="background:#9fd48a"></span>queries.sql<span class="tag">Pro</span></div>
                         <h3>Raw SQL, still Odoo-aware</h3>
-                        <p><code>cr.execute(...)</code> steps outside the ORM, so a generic SQL plugin has
-                            no idea <code>sale_order_line</code> is one of your models. DevKit maps the
-                            table back, completes real columns, and Ctrl+click on a column opens the
-                            Python field behind it.</p>
+                        <p>SQL inside Odoo cursor calls still belongs to your model layer. DevKit injects
+                            PostgreSQL support into the query, completes model-backed tables, relation
+                            tables and stored columns within the addon's dependency scope, and links SQL
+                            columns back to their Python field declarations.</p>
                     </div>
                     <div class="feature-shot">
                         <div class="shot-slider">
                             <div class="shot-track">
-                                <img src="assets/img/sql/raw_sql.gif" alt="Odoo DevKit completing a column name inside cr.execute" loading="lazy" draggable="false">
+                                <img src="assets/img/sql/raw_sql.gif" alt="Odoo DevKit adding PostgreSQL support to an Odoo cursor query, completing Odoo tables and navigating from a SQL column to its Python field" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-block">
+                    <div class="feature-copy">
+                        <div class="file-tab"><span class="dot" style="background:var(--purple-deep)"></span>run/debug</div>
+                        <h3>Run Odoo, already configured</h3>
+                        <p>DevKit finds your Odoo launcher and creates a ready-to-run configuration with
+                            the right addon paths and defaults. Run or debug from your code or tests.</p>
+                    </div>
+                    <div class="feature-shot">
+                        <div class="shot-slider">
+                            <div class="shot-track">
+                                <img src="assets/img/run/odoo-run.gif" alt="Odoo DevKit finding a launcher and creating an Odoo run configuration" loading="lazy" draggable="false">
+                            </div>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1790,21 +1927,22 @@
                 <div class="feature-block">
                     <div class="feature-copy">
                         <div class="file-tab"><span class="dot" style="background:#e5595a"></span>problems.log</div>
-                        <h3>Warnings tied to your Odoo version</h3>
-                        <p><code>&lt;tree&gt;</code> became <code>&lt;list&gt;</code> in Odoo 18;
-                            <code>attrs=</code> was removed one release earlier. DevKit checks each addon
-                            against the version it detects, not a generic rule set. It flags real risk
-                            too, like <code>sudo()</code> inside a public route handing data to anonymous
-                            visitors.</p>
+                        <h3>Inspections with Odoo context</h3>
+                        <p>Generic inspections see isolated Python or XML. DevKit sees the addon around
+                            it&mdash;its Odoo version, dependency graph, model metadata, templates and
+                            routes. That context powers relevant warnings across the stack, helping you
+                            catch compatibility, correctness and security problems earlier.</p>
                     </div>
                     <div class="feature-shot">
                         <div class="shot-slider">
                             <div class="shot-track">
                                 <img src="assets/img/warning/view_type_deprecated.png" alt="Odoo DevKit flagging &lt;tree&gt; as deprecated on an Odoo 18 project" loading="lazy" draggable="false">
                                 <img src="assets/img/warning/attr_deprecated.png" alt="Odoo DevKit flagging attrs= as removed on an Odoo 17+ project" loading="lazy" draggable="false">
+                                <img src="assets/img/warning/directive_deprecated.png" alt="Odoo DevKit flagging t-esc and t-raw as deprecated in favor of t-out on an Odoo 16+ project" loading="lazy" draggable="false">
                                 <img src="assets/img/warning/sudo.png" alt="Odoo DevKit warning that sudo() bypasses access rights inside a public route" loading="lazy" draggable="false">
+                                <img src="assets/img/warning/template_attribute.png" alt="Odoo DevKit flagging a t-else with no preceding t-if/t-elif sibling" loading="lazy" draggable="false">
                             </div>
-                            <span class="zoom-hint">⤢ Click to enlarge</span>
+                            <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
                     </div>
                 </div>
@@ -1867,35 +2005,37 @@
         <section class="section" id="requirements">
             <div class="wrap">
                 <div class="section-head">
-                    <h2>What you need</h2>
-                    <p>PyCharm 2026.2 or newer (build <code class="mono">262</code>+), either edition.
-                        Odoo 10 and up.</p>
+                    <h2>Available today on PyCharm</h2>
+                    <p>The first Odoo DevKit release supports PyCharm 2026.2 or newer (build
+                        <code class="mono">262</code>+), in either edition, and Odoo 10+. Requirements
+                        for additional IDEs will be listed here as each integration ships.</p>
                 </div>
 
                 <div class="req-table-wrap">
                     <table class="req-table">
+                        <caption class="sr-only">Odoo DevKit feature availability by PyCharm edition</caption>
                         <thead>
                             <tr>
-                                <th>Capability</th>
-                                <th>Community</th>
-                                <th>Professional</th>
+                                <th scope="col">Capability</th>
+                                <th scope="col">Community</th>
+                                <th scope="col">Professional</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Python &amp; XML</td>
-                                <td class="yes">&check;</td>
-                                <td class="yes">&check;</td>
+                                <th scope="row">Python &amp; XML</th>
+                                <td class="yes"><span aria-hidden="true">&check;</span><span class="sr-only">Supported</span></td>
+                                <td class="yes"><span aria-hidden="true">&check;</span><span class="sr-only">Supported</span></td>
                             </tr>
                             <tr>
-                                <td>JavaScript &amp; Owl components</td>
-                                <td class="yes">&check;*</td>
-                                <td class="yes">&check;</td>
+                                <th scope="row">JavaScript &amp; Owl components</th>
+                                <td class="yes"><span aria-hidden="true">&check;*</span><span class="sr-only">Supported with limitations</span></td>
+                                <td class="yes"><span aria-hidden="true">&check;</span><span class="sr-only">Supported</span></td>
                             </tr>
                             <tr>
-                                <td>SQL &amp; CSS completion</td>
-                                <td class="no">&mdash;</td>
-                                <td class="yes">&check;</td>
+                                <th scope="row">SQL &amp; CSS completion</th>
+                                <td class="no"><span aria-hidden="true">&mdash;</span><span class="sr-only">Not supported</span></td>
+                                <td class="yes"><span aria-hidden="true">&check;</span><span class="sr-only">Supported</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1910,8 +2050,9 @@
         <section class="section" id="pricing">
             <div class="wrap">
                 <div class="section-head">
-                    <h2>One license, the full plugin</h2>
-                    <p>No tiers to compare. SQL and CSS support also needs PyCharm Professional.</p>
+                    <h2>One plan, every current feature</h2>
+                    <p>No feature tiers to compare. In the current PyCharm release, SQL and CSS support
+                        also requires PyCharm Professional.</p>
                 </div>
 
                 <div class="pricing-card">
@@ -1929,7 +2070,8 @@
                         <a class="btn btn-primary btn-block btn-lg" href="#">Start Free Trial</a>
                         <a class="btn btn-ghost btn-block" href="#">View Pricing on JetBrains Marketplace</a>
                     </div>
-                    <p class="pricing-fine">Activate from PyCharm: <b>Help &rarr; Register...</b></p>
+                    <p class="pricing-fine">Current PyCharm release: activate from <b>Help &rarr;
+                            Register...</b></p>
                 </div>
             </div>
         </section>
@@ -1943,16 +2085,17 @@
 
                 <div class="faq">
                     <div class="faq-item">
-                        <h3>Which IDE do I need?</h3>
-                        <p>PyCharm Community or Professional, 2026.2 (build <code>262</code>) or newer.
-                            SQL and CSS need Professional, with its bundled plugin enabled. JavaScript
-                            and Owl work in both editions, within Community's own more limited
-                            JavaScript support.</p>
+                        <h3>Which IDEs are supported?</h3>
+                        <p>PyCharm Community and Professional 2026.2 (build <code>262</code>) or newer
+                            are supported today. SQL and CSS need Professional, with its bundled plugin
+                            enabled. JavaScript and Owl work in both editions, within Community's own
+                            more limited JavaScript support.</p>
                     </div>
                     <div class="faq-item">
-                        <h3>Will Odoo DevKit support other IDEs?</h3>
-                        <p>PyCharm is the only one today. The engine isn't tied to a single editor, so
-                            others may follow. Tell us which one you need.</p>
+                        <h3>What about other IDEs?</h3>
+                        <p>PyCharm is the first supported IDE, not the limit of Odoo DevKit. Additional
+                            IDE integrations are on the roadmap and will be announced individually when
+                            they are ready.</p>
                     </div>
                     <div class="faq-item">
                         <h3>Which Odoo versions are supported?</h3>
@@ -1961,7 +2104,9 @@
                     </div>
                     <div class="faq-item">
                         <h3>Does my code ever leave my machine?</h3>
-                        <p>No. Analysis and indexing run locally in your IDE, and nothing is uploaded.</p>
+                        <p>Code analysis and indexing run locally inside your IDE. Odoo DevKit does not
+                            upload your source code. Your IDE or its marketplace may connect to its own
+                            services for licensing and product operation.</p>
                     </div>
                     <div class="faq-item">
                         <h3>Is there a free trial?</h3>
@@ -1969,10 +2114,10 @@
                     </div>
                     <div class="faq-item">
                         <h3>How do I get support or report a bug?</h3>
-                        <p>Open an <a href="https://github.com/odonexus/odoo-devkit/issues" target="_blank"
-                                rel="noopener">issue on GitHub</a>, or email
-                            <a href="mailto:odonexussoft@gmail.com">odonexussoft@gmail.com</a>.
-                        </p>
+                        <p>Email <a href="mailto:odonexussoft@gmail.com">odonexussoft@gmail.com</a> for
+                            support or bug reports. You can also review known reports on the
+                            <a href="https://github.com/odonexus/odoo-devkit/issues" target="_blank"
+                                rel="noopener">GitHub issue tracker</a>.</p>
                     </div>
                 </div>
             </div>
@@ -1987,10 +2132,9 @@
                 <span>&copy; 2026 OdoNexus</span>
             </div>
             <div class="foot-links">
-                <!-- TODO: fill in real URLs once the Marketplace listing / vendor site are live -->
                 <a href="https://github.com/odonexus/odoo-devkit" target="_blank" rel="noopener">GitHub</a>
-                <a href="#">Changelog</a>
-                <a href="#">License</a>
+                <a href="documentation.html">Documentation</a>
+                <a href="eula.html">License</a>
                 <a href="mailto:odonexussoft@gmail.com">Contact</a>
             </div>
         </div>
@@ -2014,6 +2158,18 @@
 
             links.querySelectorAll('a').forEach(function (link) {
                 link.addEventListener('click', closeMenu);
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && links.classList.contains('open')) {
+                    closeMenu();
+                    toggle.focus();
+                }
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!links.classList.contains('open')) return;
+                if (!links.contains(event.target) && !toggle.contains(event.target)) closeMenu();
             });
         })();
 
@@ -2054,8 +2210,8 @@
                 var axisLocked = null; // 'x' | 'y' | null
 
                 function render(withTransition, dragPx) {
-                    track.style.transition = withTransition ?
-                        'transform .45s cubic-bezier(.22, .61, .36, 1)' : 'none';
+                    track.style.transition = withTransition && !reduceMotion ?
+                        'transform .2s ease-out' : 'none';
                     track.style.transform =
                         'translate3d(calc(' + (-current * 100) + '% + ' + (dragPx || 0) + 'px), 0, 0)';
                 }
@@ -2158,7 +2314,11 @@
 
             function setActiveDot(container, index) {
                 Array.prototype.forEach.call(container.children, function (dot, i) {
-                    if (dot.tagName === 'BUTTON') dot.classList.toggle('is-active', i === index);
+                    if (dot.tagName !== 'BUTTON') return;
+                    var isActive = i === index;
+                    dot.classList.toggle('is-active', isActive);
+                    if (isActive) dot.setAttribute('aria-current', 'true');
+                    else dot.removeAttribute('aria-current');
                 });
             }
 
@@ -2166,15 +2326,11 @@
                 var indicator = document.createElement('span');
                 indicator.className = 'dot-indicator';
                 container.appendChild(indicator);
-                // Capture the resting circle size ONCE, before any stretch animation ever
-                // runs — reading offsetWidth later, mid-animation, would return whatever
-                // elongated width the pill currently has, not the true "circle" size.
-                indicator.__baseSize = indicator.offsetWidth || 9;
+                // Capture the resting circle size once for transform-only positioning.
+                indicator.__baseSize = indicator.offsetWidth ||
+                    (container.classList.contains('lightbox-dots') ? 10 : 9);
                 return indicator;
             }
-
-            var DOT_STRETCH_MS = 190; // phase 1: pill stretches to connect old + new position
-            var DOT_SNAP_MS = 280;    // phase 2: pill contracts back into a circle, with a springy overshoot
 
             function dotButtons(container) {
                 return Array.prototype.filter.call(container.children, function (el) {
@@ -2186,10 +2342,13 @@
                 return btn.offsetLeft + btn.offsetWidth / 2;
             }
 
-            // "Liquid dot" indicator: moving to a new index doesn't just slide a circle —
-            // it stretches into a pill connecting the old and new dot (phase 1), then
-            // contracts back into a circle at the new dot with a little springy snap
-            // (phase 2), like a drop of liquid reaching over and pulling itself in.
+            function dotIndicatorTransform(left, scale) {
+                return 'translate3d(' + left + 'px, -50%, 0) scaleX(' + scale + ')';
+            }
+
+            // Stretch into a solid pill between the old and new dots, then contract at
+            // the destination. Only transform is animated, so the effect stays on the
+            // compositor and does not shift the dots row's layout.
             function positionDotIndicator(container, indicator, index) {
                 if (!indicator) return;
                 var buttons = dotButtons(container);
@@ -2199,38 +2358,33 @@
                 var size = indicator.__baseSize || indicator.offsetWidth || 9;
                 var targetCenter = dotCenterX(btn);
                 var targetLeft = targetCenter - size / 2;
-
+                var finalTransform = dotIndicatorTransform(targetLeft, 1);
                 var prevIndex = indicator.__index;
                 indicator.__index = index;
 
-                if (prevIndex === undefined || prevIndex === index) {
-                    // First placement, or no real move — just sit there, no stretch.
-                    indicator.style.transition = 'none';
-                    indicator.style.width = size + 'px';
-                    indicator.style.left = targetLeft + 'px';
-                    return;
+                if (indicator.__motion) {
+                    indicator.__motion.cancel();
+                    indicator.__motion = null;
                 }
+
+                indicator.style.transform = finalTransform;
+                if (reduceMotion || prevIndex === undefined || prevIndex === index || !indicator.animate) return;
 
                 var prevBtn = buttons[prevIndex];
                 var prevCenter = prevBtn ? dotCenterX(prevBtn) : targetCenter;
+                var prevLeft = prevCenter - size / 2;
                 var stretchLeft = Math.min(prevCenter, targetCenter) - size / 2;
-                var stretchWidth = Math.abs(targetCenter - prevCenter) + size;
+                var stretchScale = (Math.abs(targetCenter - prevCenter) + size) / size;
 
-                // Phase 1 — stretch into a pill spanning from the old dot to the new one.
-                indicator.style.transition =
-                    'left ' + DOT_STRETCH_MS + 'ms ease-out, width ' + DOT_STRETCH_MS + 'ms ease-out';
-                indicator.style.left = stretchLeft + 'px';
-                indicator.style.width = stretchWidth + 'px';
-
-                clearTimeout(indicator.__snapTimer);
-                indicator.__snapTimer = setTimeout(function () {
-                    // Phase 2 — the tail catches up and it pinches back into a circle.
-                    indicator.style.transition =
-                        'left ' + DOT_SNAP_MS + 'ms cubic-bezier(.34, 1.56, .64, 1), ' +
-                        'width ' + DOT_SNAP_MS + 'ms cubic-bezier(.34, 1.56, .64, 1)';
-                    indicator.style.left = targetLeft + 'px';
-                    indicator.style.width = size + 'px';
-                }, DOT_STRETCH_MS);
+                indicator.__motion = indicator.animate([
+                    { transform: dotIndicatorTransform(prevLeft, 1), offset: 0 },
+                    { transform: dotIndicatorTransform(stretchLeft, stretchScale), offset: 0.48 },
+                    { transform: finalTransform, offset: 1 }
+                ], {
+                    duration: 200,
+                    easing: 'ease-out'
+                });
+                indicator.__motion.onfinish = function () { indicator.__motion = null; };
             }
 
             // Lets the whole dots row act as a mini scrubber: press anywhere on it (mouse
@@ -2294,11 +2448,9 @@
             }
 
             /* ---------- shared lightbox gallery (built once, reused by every card) ---------- */
-            var lightbox = document.createElement('div');
+            var lightbox = document.createElement('dialog');
             lightbox.className = 'lightbox';
-            lightbox.setAttribute('role', 'dialog');
-            lightbox.setAttribute('aria-modal', 'true');
-            lightbox.setAttribute('aria-hidden', 'true');
+            lightbox.setAttribute('aria-label', 'Screenshot gallery');
             lightbox.innerHTML =
                 '<button type="button" class="lightbox-close" aria-label="Close">&times;</button>' +
                 '<button type="button" class="lightbox-nav prev" aria-label="Previous image">&#10094;</button>' +
@@ -2349,23 +2501,22 @@
                         }
                     }
                 });
+                onLightboxClose = onClose || null;
+                lastFocused = document.activeElement;
+                lightbox.showModal();
+                lightbox.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
                 if (hasMultiple) {
                     setActiveDot(lightboxDots, startIndex);
                     positionDotIndicator(lightboxDots, indicator, startIndex);
                 }
-
-                onLightboxClose = onClose || null;
-                lastFocused = document.activeElement;
-                lightbox.classList.add('is-open');
-                lightbox.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
                 lightboxCloseBtn.focus();
             }
 
             function closeLightbox() {
                 if (!lightbox.classList.contains('is-open')) return;
                 lightbox.classList.remove('is-open');
-                lightbox.setAttribute('aria-hidden', 'true');
+                lightbox.close();
                 document.body.style.overflow = '';
                 if (onLightboxClose) onLightboxClose();
                 onLightboxClose = null;
@@ -2378,10 +2529,13 @@
             lightbox.addEventListener('click', function (e) {
                 if (e.target === lightbox) closeLightbox();
             });
+            lightbox.addEventListener('cancel', function (e) {
+                e.preventDefault();
+                closeLightbox();
+            });
             document.addEventListener('keydown', function (e) {
                 if (!lightbox.classList.contains('is-open')) return;
-                if (e.key === 'Escape') closeLightbox();
-                else if (e.key === 'ArrowLeft' && lightboxCarousel) lightboxCarousel.prev();
+                if (e.key === 'ArrowLeft' && lightboxCarousel) lightboxCarousel.prev();
                 else if (e.key === 'ArrowRight' && lightboxCarousel) lightboxCarousel.next();
             });
 
@@ -2397,10 +2551,23 @@
                 var imgs = Array.prototype.slice.call(track.querySelectorAll('img'));
                 if (!imgs.length) return;
 
+                var previewAction = slider.querySelector('.preview-action');
+                if (previewAction) {
+                    var featureBlock = slider.closest('.feature-block');
+                    var featureHeading = featureBlock ? featureBlock.querySelector('h3') : null;
+                    var previewLabel = imgs.length > 1 ? 'View gallery' : 'View full size';
+                    previewAction.textContent = previewLabel;
+                    previewAction.setAttribute('aria-label', previewLabel +
+                        (featureHeading ? ': ' + featureHeading.textContent : ''));
+                }
+
                 var timer = null;
                 var suppressClick = false;
                 var dotsEl = null;
                 var dotIndicator = null;
+                var pauseBtn = null;
+                // Reduced-motion users start paused, but can explicitly opt into autoplay.
+                var userPaused = reduceMotion;
 
                 if (imgs.length > 1) {
                     dotsEl = document.createElement('div');
@@ -2424,6 +2591,28 @@
                             if (!lightbox.classList.contains('is-open')) start();
                         }
                     });
+
+                    pauseBtn = document.createElement('button');
+                    pauseBtn.type = 'button';
+                    pauseBtn.className = 'shot-pause';
+
+                    function renderPauseButton() {
+                        pauseBtn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+                        pauseBtn.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+                        pauseBtn.innerHTML = userPaused ?
+                            '<span aria-hidden="true">&#9654;</span>' :
+                            '<span aria-hidden="true">&#10074;&#10074;</span>';
+                    }
+
+                    renderPauseButton();
+                    pauseBtn.addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        userPaused = !userPaused;
+                        renderPauseButton();
+                        if (userPaused) stop();
+                        else start();
+                    });
+                    slider.appendChild(pauseBtn);
                 }
 
                 var carousel = makeCarousel(slider, track, imgs.length, {
@@ -2443,7 +2632,7 @@
                 function next() { carousel.next(); }
 
                 function start() {
-                    if (reduceMotion || imgs.length < 2 || timer) return;
+                    if (userPaused || imgs.length < 2 || timer) return;
                     var interval = parseInt(slider.dataset.interval, 10) || 4500;
                     timer = setInterval(next, interval);
                 }
@@ -2469,6 +2658,10 @@
                 slider.addEventListener('mouseenter', stop);
                 slider.addEventListener('mouseleave', function () {
                     if (!lightbox.classList.contains('is-open')) start();
+                });
+                slider.addEventListener('focusin', stop);
+                slider.addEventListener('focusout', function (event) {
+                    if (!slider.contains(event.relatedTarget) && !lightbox.classList.contains('is-open')) start();
                 });
 
                 if ('IntersectionObserver' in window) {
