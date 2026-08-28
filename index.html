@@ -1875,13 +1875,15 @@
                         <h3>The framework on top of JavaScript</h3>
                         <p>Odoo layers its own module system, Owl components, registries, services and
                             hooks over plain JavaScript. DevKit models those Odoo-specific layers so
-                            completion and navigation can resolve registry keys and service names.</p>
+                            completion and navigation can resolve registry keys, service names and patched
+                            class members.</p>
                     </div>
                     <div class="feature-shot">
                         <div class="shot-slider">
                             <div class="shot-track">
                                 <img src="assets/img/js/component.gif" alt="Odoo DevKit completing and highlighting Owl component syntax" loading="lazy" draggable="false">
                                 <img src="assets/img/js/inline_template.gif" alt="Odoo DevKit completing an inline Owl template written as a tagged xml template literal" loading="lazy" draggable="false">
+                                <img src="assets/img/js/patching.gif" alt="Odoo DevKit showing override gutters and member support inside an Odoo JavaScript patch" loading="lazy" draggable="false">
                             </div>
                             <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
@@ -1941,6 +1943,7 @@
                                 <img src="assets/img/warning/directive_deprecated.png" alt="Odoo DevKit flagging t-esc and t-raw as deprecated in favor of t-out on an Odoo 16+ project" loading="lazy" draggable="false">
                                 <img src="assets/img/warning/sudo.png" alt="Odoo DevKit warning that sudo() bypasses access rights inside a public route" loading="lazy" draggable="false">
                                 <img src="assets/img/warning/template_attribute.png" alt="Odoo DevKit flagging a t-else with no preceding t-if/t-elif sibling" loading="lazy" draggable="false">
+                                <img src="assets/img/warning/invalid_model.png" alt="Odoo DevKit flagging a model outside the current addon's dependency chain" loading="lazy" draggable="false">
                             </div>
                             <button type="button" class="preview-action" aria-label="Open screenshot preview">Open preview</button>
                         </div>
