@@ -199,6 +199,7 @@
                 <h1>Point DevKit at the right Odoo source.</h1>
                 <p class="lede">DevKit uses your project structure to connect each custom-addon folder to its matching Odoo core. This lets it resolve the correct version, core models and addon dependencies while you work.</p>
                 <div class="jump-links">
+                    <a href="#installation">Installation</a>
                     <a href="#content-roots">Content roots</a>
                     <a href="#dependencies">Project dependencies</a>
                     <a href="#check">Check your setup</a>
@@ -207,6 +208,20 @@
         </section>
 
         <div class="wrap">
+            <section class="section" id="installation" aria-labelledby="installation-heading">
+                <h2 id="installation-heading">Install Odoo DevKit</h2>
+                <p class="intro">The current release supports PyCharm 2026.2 (build <code>262.*</code>).
+                    Get the plugin, start a trial, or view current pricing on
+                    <a href="https://plugins.jetbrains.com/plugin/34059-odoo-devkit" target="_blank" rel="noopener">JetBrains Marketplace</a>.</p>
+                <ol class="steps">
+                    <li>Open <strong>Settings &rarr; Plugins &rarr; Marketplace</strong> in PyCharm.</li>
+                    <li>Search for <strong>Odoo DevKit</strong>, select the plugin, and click <strong>Install</strong>.
+                        Restart the IDE if prompted.</li>
+                    <li>Follow the IDE's activation prompts to start a trial or activate your license,
+                        then connect your Odoo source using one of the methods below.</li>
+                </ol>
+            </section>
+
             <section class="section" aria-labelledby="choose-heading">
                 <h2 id="choose-heading">Choose one connection method</h2>
                 <p class="intro">Both methods work. For most workspaces, open each Odoo core as a project and add its custom addons as content roots. Use a project dependency only when the projects must remain separate.</p>

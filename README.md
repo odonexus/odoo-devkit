@@ -46,7 +46,7 @@ of guessing from a list of snippets.
 
 ## Requirements
 
-- PyCharm Community or Professional, 2026.2 or newer (build 262+).
+- PyCharm Community or Professional, 2025.1 or newer (build 251+).
 - SQL and CSS features need PyCharm Professional, with the matching bundled plugin enabled.
 - JavaScript and Owl support works in both editions, limited by PyCharm Community's own, more
   restricted JavaScript support.
